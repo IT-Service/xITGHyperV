@@ -17,13 +17,10 @@ ConvertFrom-StringData @'
 	EnableStaticMacAddress=Устаревший сетевой адаптер присутствует, но без статического MAC адреса.
 	PerformVMNetModify=Изменение конфигурации устаревшего сетевого адаптера.
 	CannotChangeHostAdapterMacAddress=Устаревший сетевой адаптер - это адаптер Hyper-V хоста. Его конфигурация не может быть изменена.
-	AddVMNetAdapter=Создание устаревшего сетевого адаптера.
-	RemoveVMNetAdapter=Удаление устаревшего сетевого адаптера.
 	VMNetAdapterExistsNoActionNeeded=Устаревший сетевой адаптер присутствует с требуемой конфигурацией. Дополнительных действий не требуется.
 	VMNetAdapterDoesNotExistShouldAdd=Устаревший сетевой адаптер отсутствует. Он будет добавлен.
 	VMNetAdapterExistsShouldRemove=Устаревший сетевой адаптер присутствует. Он будет удалён.
 	VMNetAdapterDoesNotExistNoActionNeeded=Устаревший сетевой адаптер отсутствует. Дополнительных действий не требуется.
 	StaticMacExists=Статический Mac адрес соответствует указанному.
 	SwitchIsDifferent=Устаревший сетевой адаптер не подключен к указанному коммутатору.
-	PerformSwitchConnect=Подключение устаревшего сетевого адаптера к указанному коммутатору.
 '@

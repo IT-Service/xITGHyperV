@@ -17,13 +17,10 @@ ConvertFrom-StringData @'
 	EnableStaticMacAddress=VM Legacy Network Adapter exists but without static MAC address setting.
 	PerformVMNetModify=Performing VM Legacy Network Adapter configuration changes.
 	CannotChangeHostAdapterMacAddress=VM Legacy Network adapter in configuration is a host adapter. Its configuration cannot be modified.
-	AddVMNetAdapter=Adding VM Legacy Network Adapter.
-	RemoveVMNetAdapter=Removing VM Legacy Network Adapter.
 	VMNetAdapterExistsNoActionNeeded=VM Legacy Network Adapter exists with requested configuration. No action needed.
 	VMNetAdapterDoesNotExistShouldAdd=VM Legacy Network Adapter does not exist. It will be added.
 	VMNetAdapterExistsShouldRemove=VM Legacy Network Adapter exists. It will be removed.
 	VMNetAdapterDoesNotExistNoActionNeeded=VM Legacy Network adapter does not exist. No action needed.
 	StaticMacExists=StaicMacAddress configuration exists as desired.
 	SwitchIsDifferent=Legacy Network Adapter is not connected to the requested switch.
-	PerformSwitchConnect=Connecting VM Legacy Network adapter to the right switch.
 '@
