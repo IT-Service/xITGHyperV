@@ -63,7 +63,7 @@ Manages legacy VMNetadapters attached to a Hyper-V virtual machine.
 
 #### Read-Only Properties from Get-TargetResource for xVMLegacyNetworkAdapter
 
-* **`[Boolean]` DynamicMacAddress** _(Read)_: Does the VMNetworkAdapter use a
+* **`[Boolean]` DynamicMacAddress** _(Read)_: Does the VM Network Adapter use a
  Dynamic MAC Address.
 
 * [Add multiple VM Network adapters to a VM](/Examples/xVMLegacyNetworkAdapter/Sample_xVMLegacyNetworkAdapter_MultipleVM.ps1)

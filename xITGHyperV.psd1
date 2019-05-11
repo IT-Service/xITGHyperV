@@ -9,10 +9,10 @@
     Author             = 'Sergei S. Betke'
 
     # Company or vendor of this module
-    CompanyName        = 'ФБУ "Тест-С.-Петербург"'
+    CompanyName        = 'Test-St-Petersburg'
 
     # Copyright statement for this module
-    Copyright          = '(c) 2019 Бетке Сергей Сергеевич. All rights reserved.'
+    Copyright          = '(c) 2019 Sergey S. Betke. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description        = 'DSC resources xITGHyperV module.'
