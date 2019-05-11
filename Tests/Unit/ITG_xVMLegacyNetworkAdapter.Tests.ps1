@@ -54,9 +54,10 @@ try
 
         $MockAdapter = [PSObject]@{
             Name           = $TestAdapter.Name
-            SwitchName     = $MockHostAdapter.SwitchName
+            SwitchName     = $TestAdapter.SwitchName
             IsManagementOs = $True
             MacAddress     = '14FEB5C6CE98'
+            IsLegacy       = $True
         }
 
         Describe "$($Global:DSCResourceName)\Get-TargetResource" {
