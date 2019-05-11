@@ -28,16 +28,16 @@ Function Get-TargetResource
     [CmdletBinding()]
     [OutputType([System.Collections.Hashtable])]
     Param (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String] $Id,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String] $Name,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String] $SwitchName,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String] $VMName
     )
 
@@ -118,16 +118,16 @@ Function Set-TargetResource
 {
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String] $Id,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String] $Name,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String] $SwitchName,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String] $VMName,
 
         [Parameter()]
@@ -262,16 +262,16 @@ Function Test-TargetResource
     [CmdletBinding()]
     [OutputType([System.Boolean])]
     Param (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String] $Id,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String] $Name,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String] $SwitchName,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String] $VMName,
 
         [Parameter()]
