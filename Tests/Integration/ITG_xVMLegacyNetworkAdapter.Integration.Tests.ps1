@@ -9,11 +9,17 @@ if (Test-SkipContinuousIntegrationTask -Type 'Integration')
     return
 }
 
-$script:dscModuleName = 'DscResource.Template'
-$script:dscResourceFriendlyName = 'Folder'
-$script:dscResourceName = "MSFT_$($script:dscResourceFriendlyName)"
+# Ensure that the tests can be performed on this computer
+if ( -not ( Test-HyperVInstalled ) )
+{
+    return
+}
 
-region HEADER
+$script:dscModuleName = 'xITGHyperV'
+$script:dscResourceFriendlyName = 'xVMLegacyNetworkAdapter'
+$script:dscResourceName = "ITG_$($script:dscResourceFriendlyName)"
+
+#region HEADER
 # Integration Test Template Version: 1.3.3
 [String] $script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 if ( (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
@@ -31,15 +37,40 @@ $TestEnvironment = Initialize-TestEnvironment `
 
 try
 {
+	$VMName = 'HyperVIntTestsVM'
+	$VMPath = Join-Path -Path $env:Temp `
+		-ChildPath $VMName
+
+	# Make sure test VM does not exist
+	if (Get-VM -Name $VMName -ErrorAction SilentlyContinue)
+	{
+		$null = Remove-VM -Name $VMName -Force
+	} # if
+
+	# Create the VM that will be used to test with
+	$null = New-VM -Name $VMName -NoVHD -Path $VMPath
+
+	# Create a config data object to pass to the DSC Configs
+	$ConfigData = @{
+		AllNodes = @(
+			@{
+				NodeName                                     = 'localhost'
+				VMName                                       = $VMName
+				CompatibilityForMigrationEnabled             = $true
+				CompatibilityForOlderOperatingSystemsEnabled = $true
+			}
+		)
+	}
+
     $configFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:dscResourceName).config.ps1"
     . $configFile
 
     Describe "$($script:dscResourceName)_Integration" {
         BeforeAll {
             $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
-        }
+		}
 
-        $configurationName = "$($script:dscResourceName)_Create_Config"
+		$configurationName = "$($script:dscResourceName)_Create_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
             It 'Should compile and apply the MOF without throwing' {
@@ -78,11 +109,8 @@ try
                 }
 
                 $resourceCurrentState.Ensure | Should -Be 'Present'
-                $resourceCurrentState.Path | Should -Be $ConfigurationData.AllNodes.Path
-                $resourceCurrentState.ReadOnly | Should -Be $ConfigurationData.AllNodes.ReadOnly
-                $resourceCurrentState.Hidden | Should -Be $false
-                $resourceCurrentState.EnableSharing | Should -Be $false
-                $resourceCurrentState.ShareName | Should -BeNullOrEmpty
+                $resourceCurrentState.Name | Should -Be $ConfigurationData.AllNodes.VMLegacyNICName
+                $resourceCurrentState.VMName | Should -Be $ConfigurationData.AllNodes.VMName
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
@@ -129,22 +157,24 @@ try
                 }
 
                 $resourceCurrentState.Ensure | Should -Be 'Absent'
-                $resourceCurrentState.Path | Should -Be $ConfigurationData.AllNodes.Path
-                $resourceCurrentState.ReadOnly | Should -Be $false
-                $resourceCurrentState.Hidden | Should -Be $false
-                $resourceCurrentState.EnableSharing | Should -Be $false
-                $resourceCurrentState.ShareName | Should -BeNullOrEmpty
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
-    }
+
+	}
 }
 finally
 {
-    #region FOOTER
-    Restore-TestEnvironment -TestEnvironment $TestEnvironment
-    #endregion
+	#region FOOTER
+	# Make sure the test VM has been removed
+	if (Get-VM -Name $VMName -ErrorAction SilentlyContinue)
+	{
+		$null = Remove-VM -Name $VMName -Force
+	} # if
+
+	Restore-TestEnvironment -TestEnvironment $TestEnvironment
+	#endregion
 }
