@@ -66,4 +66,4 @@ Manages legacy VMNetadapters attached to a Hyper-V virtual machine.
 * **`[Boolean]` DynamicMacAddress** _(Read)_: Does the VM Network Adapter use a
  Dynamic MAC Address.
 
-* [Add multiple VM Network adapters to a VM](/Examples/xVMLegacyNetworkAdapter/Sample_xVMLegacyNetworkAdapter_MultipleVM.ps1)
+* [Add multiple VM Network adapters to a VM](/IT-Service/xITGHyperV/blob/feature/xITGHyperV/Examples/Resources/xVMLegacyNetworkAdapter/Sample_xVMLegacyNetworkAdapter_MultipleVM.ps1)
