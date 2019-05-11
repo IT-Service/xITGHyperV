@@ -40,36 +40,36 @@ Configuration VMAdapter
     (
         [Parameter()]
         [System.String[]]
-		$NodeName = 'localhost'
+        $NodeName = 'localhost'
     )
 
-	Import-DscResource -ModuleName PSDesiredStateConfiguration
+    Import-DscResource -ModuleName PSDesiredStateConfiguration
     Import-DscResource -ModuleName xITGHyperV -Name xVMLegacyNetworkAdapter
 
     node $NodeName
     {
-		xVMLegacyNetworkAdapter MyVM01NIC {
-			Id = 'MyVM01-NIC'
-			Name = 'MyVM01-NIC'
-			SwitchName = 'SETSwitch'
-			VMName = 'MyVM01'
-			Ensure = 'Present'
-		}
+        xVMLegacyNetworkAdapter MyVM01NIC {
+            Id = 'MyVM01-NIC'
+            Name = 'MyVM01-NIC'
+            SwitchName = 'SETSwitch'
+            VMName = 'MyVM01'
+            Ensure = 'Present'
+        }
 
-		xVMLegacyNetworkAdapter MyVM02NIC {
-			Id = 'MyVM02-NIC'
-			Name = 'NetAdapter'
-			SwitchName = 'SETSwitch'
-			VMName = 'MyVM02'
-			Ensure = 'Present'
-		}
+        xVMLegacyNetworkAdapter MyVM02NIC {
+            Id = 'MyVM02-NIC'
+            Name = 'NetAdapter'
+            SwitchName = 'SETSwitch'
+            VMName = 'MyVM02'
+            Ensure = 'Present'
+        }
 
-		xVMLegacyNetworkAdapter MyVM03NIC {
-			Id = 'MyVM03-NIC'
-			Name = 'NetAdapter'
-			SwitchName = 'SETSwitch'
-			VMName = 'MyVM03'
-			Ensure = 'Present'
-		}
-	}
+        xVMLegacyNetworkAdapter MyVM03NIC {
+            Id = 'MyVM03-NIC'
+            Name = 'NetAdapter'
+            SwitchName = 'SETSwitch'
+            VMName = 'MyVM03'
+            Ensure = 'Present'
+        }
+    }
 }

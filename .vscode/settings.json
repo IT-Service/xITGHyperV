@@ -3,7 +3,8 @@
         ".git": true,
         "node_modules/": true
     },
-"powershell.codeFormatting.openBraceOnSameLine": false,
+    "editor.formatOnSave": true,
+    "powershell.codeFormatting.openBraceOnSameLine": false,
     "powershell.codeFormatting.newLineAfterOpenBrace": false,
     "powershell.codeFormatting.newLineAfterCloseBrace": true,
     "powershell.codeFormatting.whitespaceBeforeOpenBrace": true,

@@ -63,8 +63,8 @@ Function Get-TargetResource
     }
 
     Write-Verbose -Message $localizedData.GetVMNetAdapter
-	$netAdapter = Get-VMNetworkAdapter @arguments -ErrorAction SilentlyContinue |
-		Where-Object { $_.IsLegacy }
+    $netAdapter = Get-VMNetworkAdapter @arguments -ErrorAction SilentlyContinue |
+        Where-Object { $_.IsLegacy }
 
     if ( $netAdapter )
     {
@@ -154,13 +154,13 @@ Function Set-TargetResource
 
     Write-Verbose -Message $localizedData.GetVMNetAdapter
     $netAdapterExists = Get-VMNetworkAdapter @arguments -ErrorAction SilentlyContinue |
-		Where-Object { $_.IsLegacy }
+        Where-Object { $_.IsLegacy }
 
     if ( $Ensure -eq 'Present' )
     {
         if ( $netAdapterExists )
         {
-			Write-Verbose -Message $localizedData.FoundVMNetAdapter
+            Write-Verbose -Message $localizedData.FoundVMNetAdapter
 
             if ( $VMName -ne 'ManagementOS' )
             {
@@ -188,8 +188,8 @@ Function Set-TargetResource
 
                 if ( $netAdapterExists.SwitchName -ne $SwitchName )
                 {
-					Connect-VMNetworkAdapter -VMNetworkAdapter $netAdapterExists `
-						-SwitchName $SwitchName -ErrorAction Stop -Verbose
+                    Connect-VMNetworkAdapter -VMNetworkAdapter $netAdapterExists `
+                        -SwitchName $SwitchName -ErrorAction Stop -Verbose
                 }
 
                 if ( $updateMacAddress )
@@ -298,7 +298,7 @@ Function Test-TargetResource
 
     Write-Verbose -Message $localizedData.GetVMNetAdapter
     $netAdapterExists = Get-VMNetworkAdapter @arguments -ErrorAction SilentlyContinue |
-		Where-Object { $_.IsLegacy }
+        Where-Object { $_.IsLegacy }
 
     if ( $Ensure -eq 'Present' )
     {

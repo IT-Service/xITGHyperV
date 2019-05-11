@@ -35,36 +35,44 @@ try
     Invoke-TestSetup
 
     #region Pester Tests
-	InModuleScope $script:dscResourceName {
+    InModuleScope $script:dscResourceName {
 
         # Create the Mock Objects that will be used for running tests
         $MockHostAdapter = [PSCustomObject] @{
-            Id                  = 'HostManagement1'
-            Name                = 'Management'
-            SwitchName          = 'HostSwitch'
-            VMName              = 'ManagementOS'
+            Id         = 'HostManagement1'
+            Name       = 'Management'
+            SwitchName = 'HostSwitch'
+            VMName     = 'ManagementOS'
         }
 
         $TestAdapter = [PSObject]@{
-            Id                      = $MockHostAdapter.Id
-            Name                    = $MockHostAdapter.Name
-            SwitchName              = $MockHostAdapter.SwitchName
-            VMName                  = $MockHostAdapter.VMName
+            Id         = $MockHostAdapter.Id
+            Name       = $MockHostAdapter.Name
+            SwitchName = $MockHostAdapter.SwitchName
+            VMName     = $MockHostAdapter.VMName
         }
 
         $MockAdapter = [PSObject]@{
-            Name                    = $TestAdapter.Name
-            SwitchName              = $MockHostAdapter.SwitchName
-            IsManagementOs          = $True
-            MacAddress              = '14FEB5C6CE98'
+            Name           = $TestAdapter.Name
+            SwitchName     = $MockHostAdapter.SwitchName
+            IsManagementOs = $True
+            MacAddress     = '14FEB5C6CE98'
         }
 
         Describe "$($Global:DSCResourceName)\Get-TargetResource" {
             #Function placeholders
-            function Get-VMNetworkAdapter { }
-            function Set-VMNetworkAdapter { }
-            function Remove-VMNetworkAdapter { }
-            function Add-VMNetworkAdapter { }
+            function Get-VMNetworkAdapter
+            {
+            }
+            function Set-VMNetworkAdapter
+            {
+            }
+            function Remove-VMNetworkAdapter
+            {
+            }
+            function Add-VMNetworkAdapter
+            {
+            }
             Context 'Legacy Network Adapter does not exist' {
                 Mock Get-VMNetworkAdapter
                 It 'should return ensure as absent' {
@@ -98,16 +106,24 @@ try
 
         Describe "$($Global:DSCResourceName)\Set-TargetResource" {
             #Function placeholders
-            function Get-VMNetworkAdapter { }
-            function Set-VMNetworkAdapter { }
-            function Remove-VMNetworkAdapter { }
-            function Add-VMNetworkAdapter { }
+            function Get-VMNetworkAdapter
+            {
+            }
+            function Set-VMNetworkAdapter
+            {
+            }
+            function Remove-VMNetworkAdapter
+            {
+            }
+            function Add-VMNetworkAdapter
+            {
+            }
             $newAdapter = [PSObject]@{
-                Id                      = 'UniqueString'
-                Name                    = $TestAdapter.Name
-                SwitchName              = $TestAdapter.SwitchName
-                VMName                  = 'ManagementOS'
-                Ensure                  = 'Present'
+                Id         = 'UniqueString'
+                Name       = $TestAdapter.Name
+                SwitchName = $TestAdapter.SwitchName
+                VMName     = 'ManagementOS'
+                Ensure     = 'Present'
             }
 
             Context 'Adapter does not exist but should' {
@@ -150,16 +166,24 @@ try
 
         Describe "$($Global:DSCResourceName)\Test-TargetResource" {
             #Function placeholders
-            function Get-VMNetworkAdapter { }
-            function Set-VMNetworkAdapter { }
-            function Remove-VMNetworkAdapter { }
-            function Add-VMNetworkAdapter { }
+            function Get-VMNetworkAdapter
+            {
+            }
+            function Set-VMNetworkAdapter
+            {
+            }
+            function Remove-VMNetworkAdapter
+            {
+            }
+            function Add-VMNetworkAdapter
+            {
+            }
             $newAdapter = [PSObject]@{
-                Id                      = 'UniqueString'
-                Name                    = $TestAdapter.Name
-                SwitchName              = $TestAdapter.SwitchName
-                VMName                  = 'ManagementOS'
-                Ensure                  = 'Present'
+                Id         = 'UniqueString'
+                Name       = $TestAdapter.Name
+                SwitchName = $TestAdapter.SwitchName
+                VMName     = 'ManagementOS'
+                Ensure     = 'Present'
             }
 
             Context 'Adapter does not exist but should' {
@@ -213,7 +237,7 @@ try
         }
 
     }
-	#endregion Pester Tests
+    #endregion Pester Tests
 }
 finally
 {

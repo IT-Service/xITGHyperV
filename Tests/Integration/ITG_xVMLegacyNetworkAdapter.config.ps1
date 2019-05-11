@@ -19,9 +19,9 @@ else
                 NodeName = 'localhost'
 
                 VMLegacyNICName = 'LegacyNIC'
-				SwitchName = 'Switch01'
-				VMName = 'HyperVIntTestsVM'
-			}
+                SwitchName = 'Switch01'
+                VMName = 'HyperVIntTestsVM'
+            }
         )
     }
 }
@@ -34,12 +34,12 @@ Configuration ITG_xVMLegacyNetworkAdapter_Create_Config
     {
         xVMLegacyNetworkAdapter 'Integration_Test'
         {
-			Id = $Node.VMLegacyNICName
-			Name = $Node.VMLegacyNICName
-			SwitchName = $Node.SwitchName
+            Id = $Node.VMLegacyNICName
+            Name = $Node.VMLegacyNICName
+            SwitchName = $Node.SwitchName
             VMName = $Node.VMName
-			Ensure = 'Present'
-		}
+            Ensure = 'Present'
+        }
 
     }
 }
@@ -52,12 +52,12 @@ Configuration ITG_xVMLegacyNetworkAdapter_Remove_Config
     {
         xVMLegacyNetworkAdapter 'Integration_Test'
         {
-			Id = $Node.VMLegacyNICName
-			Name = $Node.VMLegacyNICName
-			SwitchName = $Node.SwitchName
+            Id = $Node.VMLegacyNICName
+            Name = $Node.VMLegacyNICName
+            SwitchName = $Node.SwitchName
             VMName = $Node.VMName
             Ensure = 'Absent'
-		}
+        }
 
     }
 }

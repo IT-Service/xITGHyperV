@@ -98,10 +98,10 @@ function Test-ContinuousIntegrationTaskCategory
 
 <#
     .SYNOPSIS
-    	Tests if Hyper-V is installed on this OS.
+        Tests if Hyper-V is installed on this OS.
 
-	.OUTPUTS
-    	True if Hyper-V is installed. False otherwise.
+    .OUTPUTS
+        True if Hyper-V is installed. False otherwise.
 #>
 function Test-HyperVInstalled
 {
