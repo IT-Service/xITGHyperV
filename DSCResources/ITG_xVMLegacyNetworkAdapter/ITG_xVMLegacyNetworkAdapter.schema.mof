@@ -1,5 +1,5 @@
 [ClassVersion("0.1.0.0"), FriendlyName("xVMLegacyNetworkAdapter")]
-class MSFT_xVMLegacyNetworkAdapter : OMI_BaseResource
+class ITG_xVMLegacyNetworkAdapter : OMI_BaseResource
 {
     [Key] String Id;
     [Required] String Name;
