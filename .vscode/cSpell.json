@@ -3,7 +3,7 @@
     "ignorePaths": [
         ".git/*",
         ".vscode/*",
-        "DSCResource.Tests//*",
+        "DscResource.Tests/*",
         "node_modules"
     ],
     "language": "en,ru",
