@@ -1,0 +1,25 @@
+{
+    "version": "0.1",
+    "ignorePaths": [
+        ".git/*",
+        ".vscode/*",
+        "DSCResource.Tests//*",
+        "node_modules"
+    ],
+    "language": "en,ru",
+    "dictionaries": [
+        "powershell"
+    ],
+    "words": [
+        "betke",
+        "markdownlint",
+        "codecov",
+        "Veyor"
+    ],
+    "ignoreRegExpList": [
+        "AppVeyor",
+        "opencode@microsoft.com",
+        "\\.gitattributes",
+        "\\[.*?\\]\\(.*?\\)"
+    ]
+}
