@@ -1,5 +1,5 @@
 <#PSScriptInfo
-.VERSION 1.0.0
+.VERSION 1.0.2
 .GUID 0d00c0be-77d1-4170-ae48-7ba5fdd807e7
 .AUTHOR Sergei S. Betke
 .COMPANYNAME ФБУ "Тест-С.-Петербург"
@@ -34,7 +34,7 @@
 
         Compiles a configuration that creates legacy NICs on localhost Hyper-V VM.
 #>
-Configuration Sample_xVMLegacyNetworkAdapter_MultipleVM
+Configuration Sample_xVMLegacyNetworkAdapter_MultipleVM_Config
 {
     param
     (
