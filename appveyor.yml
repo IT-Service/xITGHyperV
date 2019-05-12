@@ -40,5 +40,7 @@ after_test:
 deploy_script:
   - ps: |
         Import-Module -Name "$env:APPVEYOR_BUILD_FOLDER\DscResource.Tests\AppVeyor.psm1"
-        Publish-Module -Path . -NuGetApiKey $env:gallery_api
+        # Publish-Module -Path . -NuGetApiKey $env:gallery_api
+        Import-Module -Name $env:APPVEYOR_BUILD_FOLDER
+        Publish-Module -Name xITGHyperV -NuGetApiKey $env:gallery_api
         Invoke-AppVeyorDeployTask
