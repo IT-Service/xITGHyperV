@@ -1,4 +1,9 @@
 {
+    "files.exclude": {
+        ".git": true,
+        "node_modules/": true
+    },
+    "editor.formatOnSave": true,
     "powershell.codeFormatting.openBraceOnSameLine": false,
     "powershell.codeFormatting.newLineAfterOpenBrace": false,
     "powershell.codeFormatting.newLineAfterCloseBrace": true,

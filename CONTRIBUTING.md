@@ -24,37 +24,37 @@ PowerShell code will then be formatted according to the Style Guideline
 #### mof-based resource
 
 All mof-based resource (with Get/Set/Test-TargetResource) should be prefixed
-with 'MSFT'. I.e. MSFT\_Folder.
+with 'ITG'. I.e. ITG\_Folder.
 
 >**Note:** If the resource module is not part of the DSC Resource Kit the
 >prefix can be any abbreviation, for example your name or company name.
->For the example below, the 'MSFT' prefix is used.
+>For the example below, the 'ITG' prefix is used.
 
 ##### Folder and file structure
 
 ```Text
-DSCResources/MSFT_Folder/MSFT_Folder.psm1
-DSCResources/MSFT_Folder/MSFT_Folder.schema.mof
-DSCResources/MSFT_Folder/en-US/MSFT_Folder.strings.psd1
+DSCResources/ITG_Folder/ITG_Folder.psm1
+DSCResources/ITG_Folder/ITG_Folder.schema.mof
+DSCResources/ITG_Folder/en-US/ITG_Folder.strings.psd1
 
-Tests/Unit/MSFT_Folder.Tests.ps1
+Tests/Unit/ITG_Folder.Tests.ps1
 
 Examples/Resources/Folder/1-AddConfigurationOption.ps1
 Examples/Resources/Folder/2-RemoveConfigurationOption.ps1
 ```
 
->**Note:** For the examples folder we don't use the 'MSFT\_' prefix on the
+>**Note:** For the examples folder we don't use the 'ITG\_' prefix on the
 >resource folders. This is to make those folders resemble the name the user
 >would use in the configuration file.
 
 ##### Schema mof file
 
 Please note that the `FriendlyName` in the schema mof file should not
-contain the prefix `MSFT\_`.
+contain the prefix `ITG\_`.
 
 ```powershell
 [ClassVersion("1.0.0.0"), FriendlyName("Folder")]
-class MSFT_Folder : OMI_BaseResource
+class ITG_Folder : OMI_BaseResource
 {
     # Properties removed for readability.
 };

@@ -1,0 +1,11 @@
+[ClassVersion("0.1.0.0"), FriendlyName("xVMLegacyNetworkAdapter")]
+class ITG_xVMLegacyNetworkAdapter : OMI_BaseResource
+{
+    [Key] String Id;
+    [Required] String Name;
+    [Required] String SwitchName;
+    [Required] String VMName;
+    [Write] String MacAddress;
+    [Write, ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
+    [Read] Boolean DynamicMacAddress;
+};
