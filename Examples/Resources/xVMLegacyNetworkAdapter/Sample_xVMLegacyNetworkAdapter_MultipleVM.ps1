@@ -30,11 +30,11 @@
         Defaults to 'localhost'.
 
     .EXAMPLE
-        VMAdapter
+        Sample_xVMLegacyNetworkAdapter_MultipleVM
 
         Compiles a configuration that creates legacy NICs on localhost Hyper-V VM.
 #>
-Configuration VMAdapter
+Configuration Sample_xVMLegacyNetworkAdapter_MultipleVM
 {
     param
     (
