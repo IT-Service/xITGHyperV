@@ -3,7 +3,7 @@
     Your contribution to this project is greatly appreciated!
 
     Please make sure you have read the contributing section
-    at https://github.com/PowerShell/SqlServerDsc#contributing.
+    at https://github.com/PowerShell/DscResource#contributing.
 
     Please prefix the PR title with the resource name,
     e.g. 'ResourceName: My short description'.
