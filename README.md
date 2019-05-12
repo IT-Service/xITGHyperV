@@ -36,11 +36,11 @@ A full list of changes in each version can be found in the [change log](CHANGELO
 ## Resources
 
 * [**xVMLegacyNetworkAdapter**](#xvmlegacynetworkadapter) manages legacy
- VMNetadapters attached to a Hyper-V virtual machine.
+ VM network adapters attached to a Hyper-V virtual machine.
 
 ### xVMLegacyNetworkAdapter
 
-Manages legacy VMNetadapters attached to a Hyper-V virtual machine.
+Manages legacy VM Network adapters attached to a Hyper-V virtual machine.
 
 #### Requirements for xVMLegacyNetworkAdapter
 
