@@ -2,7 +2,7 @@
 #      environment configuration  #
 #---------------------------------#
 
-version: 1.0.5.{build}
+version: 1.0.6.{build}
 environment:
   gallery_api:
     secure: lbDrWTaiRIaEUnUacZbYJHSaCGvAZfz8HsfoaE5uc5NuoebPCvptrlXzRTHN10v9
@@ -45,6 +45,6 @@ deploy_script:
         if ( $deploy )
         {
           git clean -ffdx
-          Remove-Item -LiteralPath '.git' -Recurse -Force
+          Remove-Item -Path '.*' -Recurse -Force
           Publish-Module -Path . -NuGetApiKey $env:gallery_api
         }
