@@ -31,15 +31,20 @@ test_script:
 after_test:
   - ps: |
         Import-Module -Name "$env:APPVEYOR_BUILD_FOLDER\DscResource.Tests\AppVeyor.psm1"
-        Invoke-AppveyorAfterTestTask -MainModulePath '' -Type Wiki -Author 'sergei.s.betke' -Owners 'sergei.s.betke'
+        #Invoke-AppveyorAfterTestTask -Type Wiki -Author 'sergei.s.betke' -Owners 'sergei.s.betke'
+        Invoke-AppveyorAfterTestTask -Author 'sergei.s.betke' -Owners 'sergei.s.betke'
 
 #---------------------------------#
 #      deployment configuration   #
 #---------------------------------#
 
 deploy_script:
-  - cmd: |
-        git clean -x -d -f
   - ps: |
-        Remove-Item -LiteralPath '.git' -Recurse -Force
-        Publish-Module -Path . -NuGetApiKey $env:gallery_api
+        $ErrorActionPreference = 'Continue'
+        #$deploy = ( $env:APPVEYOR_REPO_TAG -eq $true )
+        #if ( $deploy )
+        #{
+          $gitOut = git clean -x -d -f 2>&1
+          Remove-Item -LiteralPath '.git' -Recurse -Force
+          Publish-Module -Path . -NuGetApiKey $env:gallery_api
+        #}
