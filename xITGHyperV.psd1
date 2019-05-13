@@ -1,6 +1,6 @@
 @{
     # Version number of this module.
-    moduleVersion      = '1.0.4.20'
+    moduleVersion      = '1.0.5.44'
 
     # ID used to uniquely identify this module
     GUID               = '274a6c3f-5633-4487-aed1-e4130db26a51'
@@ -37,7 +37,7 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags         = @('DesiredStateConfiguration', 'DSC', 'DSCResource', 'HyperV', 'VMLegacyNetworkAdapter')
+            Tags         = @('DesiredStateConfiguration', 'DSC', 'DSCResource', 'HyperV')
 
             # A URL to the license for this module.
             LicenseUri   = 'https://github.com/IT-Service/xITGHyperV/blob/master/LICENSE'
