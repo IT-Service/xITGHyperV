@@ -2,7 +2,7 @@
 #      environment configuration  #
 #---------------------------------#
 
-version: 1.0.4.{build}
+version: 1.0.5.{build}
 environment:
   gallery_api:
     secure: lbDrWTaiRIaEUnUacZbYJHSaCGvAZfz8HsfoaE5uc5NuoebPCvptrlXzRTHN10v9
@@ -29,9 +29,10 @@ test_script:
 
 # scripts to run before deployment
 after_test:
-    - ps: |
+  - ps: |
         Import-Module -Name "$env:APPVEYOR_BUILD_FOLDER\DscResource.Tests\AppVeyor.psm1"
-        Invoke-AppveyorAfterTestTask -Type Wiki -Author 'sergei.s.betke' -Owners 'sergei.s.betke'
+        #Invoke-AppveyorAfterTestTask -Type Wiki -Author 'sergei.s.betke' -Owners 'sergei.s.betke'
+        Invoke-AppveyorAfterTestTask -Author 'sergei.s.betke' -Owners 'sergei.s.betke'
 
 #---------------------------------#
 #      deployment configuration   #
@@ -39,4 +40,11 @@ after_test:
 
 deploy_script:
   - ps: |
-        Invoke-AppVeyorDeployTask
+        $ErrorActionPreference = 'Continue'
+        $deploy = ( $env:APPVEYOR_REPO_TAG -eq $true )
+        if ( $deploy )
+        {
+          git clean -ffdx
+          Remove-Item -LiteralPath '.git' -Recurse -Force
+          Publish-Module -Path . -NuGetApiKey $env:gallery_api
+        }
