@@ -2,7 +2,7 @@
 #      environment configuration  #
 #---------------------------------#
 
-version: 1.0.4.{build}
+version: 1.0.5.{build}
 environment:
   gallery_api:
     secure: lbDrWTaiRIaEUnUacZbYJHSaCGvAZfz8HsfoaE5uc5NuoebPCvptrlXzRTHN10v9
@@ -42,9 +42,9 @@ deploy_script:
   - ps: |
         $ErrorActionPreference = 'Continue'
         $deploy = ( $env:APPVEYOR_REPO_TAG -eq $true )
-        #if ( $deploy )
-        #{
-          $gitOut = git clean -ffdX 2>&1
+        if ( $deploy )
+        {
+          git clean -ffdx
           Remove-Item -LiteralPath '.git' -Recurse -Force
           Publish-Module -Path . -NuGetApiKey $env:gallery_api
-        #}
+        }

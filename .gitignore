@@ -4,3 +4,4 @@ node_modules
 *.nuspec
 *.checksum
 TestsResults.xml
+*.zip
