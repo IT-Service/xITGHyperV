@@ -44,7 +44,21 @@ deploy_script:
         $deploy = ( $env:APPVEYOR_REPO_TAG -eq $true )
         if ( $deploy )
         {
+          #$gitOut = git checkout master 2>&1
+          #Write-Host "Starting Deployment tag $env:APPVEYOR_REPO_TAG_NAME"
+          #$moduleName = "ReportingServicesTools"
+          #$currentVersion = (Import-PowerShellDataFile .\ReportingServicesTools\$moduleName.psd1).ModuleVersion
+          #((Get-Content .\ReportingServicesTools\ReportingServicesTools.psd1).replace("ModuleVersion = '$($currentVersion)'", "ModuleVersion = '$($env:APPVEYOR_REPO_TAG_NAME)'")) | Set-Content .\ReportingServicesTools\$moduleName.psd1
           git clean -ffdx
           Remove-Item -Path '.*','Examples','Tests' -Recurse -Force
           Publish-Module -Path . -NuGetApiKey $env:gallery_api
+          #git config --global core.safecrlf false
+          #git config --global credential.helper store
+          #Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+          #git config --global user.email "jaimeta@microsoft.com"
+          #git config --global user.name "Jaime Tarquino"
+          #git add ReportingServicesTools\ReportingServicesTools.psd1
+          #git commit -m "Automatic Version Update from CI"
+          #$gitOut = git push 2>&1
+          #if ($?) {$out} else {$out.Exception}
         }
