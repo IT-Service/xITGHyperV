@@ -63,18 +63,23 @@ try
         #Function placeholders
         function Get-VMNetworkAdapter
         {
-            [CmdletBinding()]
+            [CmdletBinding(
+                DefaultParameterSetName = 'ManagementOS'
+            )]
             Param(
                 [Parameter( ParameterSetName = 'VMByName' )] [String[]] $VMName,
                 [Parameter( ParameterSetName = 'ManagementOS' )] [Switch]  $ManagementOS,
-                [Parameter( ParameterSetName = 'VM' )] [String[]] $VM,
+                [Parameter( ParameterSetName = 'VM' )] [VirtualMachine[]] $VM,
                 [Parameter( Mandatory = $true )] [String] $Name,
                 [Parameter( ParameterSetName = 'VMByName', 'VM' )] [Boolean] $IsLegacy
             )
         }
         function Set-VMNetworkAdapter
         {
-            [CmdletBinding()]
+            [CmdletBinding(
+                SupportsShouldProcess = $true,
+                DefaultParameterSetName = 'ManagementOS'
+            )]
             Param(
                 [Parameter( ParameterSetName = 'VMByName' )] [String[]] $VMName,
                 [Parameter( ParameterSetName = 'ManagementOS' )] [Switch] $ManagementOS,
@@ -114,26 +119,30 @@ try
                 [Parameter()] [UInt32] $VmmqQueuePairs,
                 [Parameter()] [UInt32] $VmqWeight,
                 [Parameter()] [Boolean] $VrssEnabled,
-                [Parameter()] [Switch] $Passthru,
-                [Parameter()] [Switch] $WhatIf
+                [Parameter()] [Switch] $Passthru
             )
         }
         function Remove-VMNetworkAdapter
         {
-            [CmdletBinding()]
+            [CmdletBinding(
+                SupportsShouldProcess = $true,
+                DefaultParameterSetName = 'ManagementOS'
+            )]
             Param(
                 [Parameter( ParameterSetName = 'VMByName' )] [String[]] $VMName,
                 [Parameter( ParameterSetName = 'ManagementOS' )] [Switch] $ManagementOS,
                 [Parameter( ParameterSetName = 'VM' )] [VirtualMachine[]] $VM,
                 [Parameter( ParameterSetName = 'VMByName', 'ManagementOS', 'VM' )] [String] $Name,
                 [Parameter( ParameterSetName = 'VMNetworkAdapter' )] [VMNetworkAdapterBase[]] $VMNetworkAdapter,
-                [Parameter()] [Switch] $Passthru,
-                [Parameter()] [Switch] $WhatIf
+                [Parameter()] [Switch] $Passthru
             )
         }
         function Add-VMNetworkAdapter
         {
-            [CmdletBinding()]
+            [CmdletBinding(
+                SupportsShouldProcess = $true,
+                DefaultParameterSetName = 'ManagementOS'
+            )]
             Param(
                 [Parameter( ParameterSetName = 'VMByName' )] [String[]] $VMName,
                 [Parameter( ParameterSetName = 'ManagementOS' )] [Switch] $ManagementOS,
@@ -146,11 +155,109 @@ try
                 [Parameter()] [Switch] $DynamicMacAddress,
                 [Parameter()] [String] $ResourcePoolName,
                 [Parameter()] [String] $StaticMacAddress,
-                [Parameter()] [Switch] $Passthru,
-                [Parameter()] [Switch] $WhatIf
+                [Parameter()] [Switch] $Passthru
             )
         }
         Describe "$($Global:DSCResourceName)\Get-TargetResource" {
+
+            #Function placeholders
+            function Get-VMNetworkAdapter
+            {
+                [CmdletBinding(
+                    DefaultParameterSetName = 'ManagementOS'
+                )]
+                Param(
+                    [Parameter( ParameterSetName = 'VMByName' )] [String[]] $VMName,
+                    [Parameter( ParameterSetName = 'ManagementOS' )] [Switch]  $ManagementOS,
+                    [Parameter( ParameterSetName = 'VM' )] [VirtualMachine[]] $VM,
+                    [Parameter( Mandatory = $true )] [String] $Name,
+                    [Parameter( ParameterSetName = 'VMByName', 'VM' )] [Boolean] $IsLegacy
+                )
+            }
+            function Set-VMNetworkAdapter
+            {
+                [CmdletBinding(
+                    SupportsShouldProcess = $true,
+                    DefaultParameterSetName = 'ManagementOS'
+                )]
+                Param(
+                    [Parameter( ParameterSetName = 'VMByName' )] [String[]] $VMName,
+                    [Parameter( ParameterSetName = 'ManagementOS' )] [Switch] $ManagementOS,
+                    [Parameter( ParameterSetName = 'VM' )] [VirtualMachine] $VM,
+                    [Parameter( ParameterSetName = 'VMByName', 'ManagementOS', 'VM' )] [String] $Name,
+                    [Parameter( ParameterSetName = 'VMNetworkAdapter' )] [VMNetworkAdapterBase] $VMNetworkAdapter,
+                    [Parameter()] [String] $SwitchName,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $AllowTeaming,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $DeviceNaming,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $DhcpGuard,
+                    [Parameter()] [UInt32] $DynamicIPAddressLimit,
+                    [Parameter()] [Switch] $DynamicMacAddress,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $FixSpeed10G,
+                    [Parameter()] [UInt32] $IPsecOffloadMaximumSecurityAssociation,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $IeeePriorityTag,
+                    [Parameter()] [ValidateSet( 'Default', 'Adaptive', 'Off', 'Low', 'Medium', 'High', ignorecase = $True )] [String] $IovInterruptModeration,
+                    [Parameter()] [UInt32] $IovQueuePairsRequested,
+                    [Parameter()] [UInt32] $IovWeight,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $MacAddressSpoofing,
+                    [Parameter()] [String[]] $MandatoryFeatureId,
+                    [Parameter()] [UInt64] $MaximumBandwidth,
+                    [Parameter()] [UInt64] $MinimumBandwidthAbsolute,
+                    [Parameter()] [UInt32] $MinimumBandwidthWeight,
+                    [Parameter()] [Boolean] $NotMonitoredInCluster,
+                    [Parameter()] [UInt32] $PacketDirectModerationCount,
+                    [Parameter()] [UInt32] $PacketDirectModerationInterval,
+                    [Parameter()] [UInt32] $PacketDirectNumProcs,
+                    [Parameter()] [ValidateSet( 'None', 'Destination', 'Source', ignorecase = $True )] [String] $PortMirroring,
+                    [Parameter()] [String] $ResourcePoolName,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $RouterGuard,
+                    [Parameter()] [String] $StaticMacAddress,
+                    [Parameter()] [UInt32] $StormLimit,
+                    [Parameter()] [String] $TestReplicaPoolName,
+                    [Parameter()] [String] $TestReplicaSwitchName,
+                    [Parameter()] [UInt32] $VirtualSubnetId,
+                    [Parameter()] [Boolean] $VmmqEnabled,
+                    [Parameter()] [UInt32] $VmmqQueuePairs,
+                    [Parameter()] [UInt32] $VmqWeight,
+                    [Parameter()] [Boolean] $VrssEnabled,
+                    [Parameter()] [Switch] $Passthru
+                )
+            }
+            function Remove-VMNetworkAdapter
+            {
+                [CmdletBinding(
+                    SupportsShouldProcess = $true,
+                    DefaultParameterSetName = 'ManagementOS'
+                )]
+                Param(
+                    [Parameter( ParameterSetName = 'VMByName' )] [String[]] $VMName,
+                    [Parameter( ParameterSetName = 'ManagementOS' )] [Switch] $ManagementOS,
+                    [Parameter( ParameterSetName = 'VM' )] [VirtualMachine[]] $VM,
+                    [Parameter( ParameterSetName = 'VMByName', 'ManagementOS', 'VM' )] [String] $Name,
+                    [Parameter( ParameterSetName = 'VMNetworkAdapter' )] [VMNetworkAdapterBase[]] $VMNetworkAdapter,
+                    [Parameter()] [Switch] $Passthru
+                )
+            }
+            function Add-VMNetworkAdapter
+            {
+                [CmdletBinding(
+                    SupportsShouldProcess = $true,
+                    DefaultParameterSetName = 'ManagementOS'
+                )]
+                Param(
+                    [Parameter( ParameterSetName = 'VMByName' )] [String[]] $VMName,
+                    [Parameter( ParameterSetName = 'ManagementOS' )] [Switch] $ManagementOS,
+                    [Parameter( ParameterSetName = 'VM' )] [VirtualMachine[]] $VM,
+                    [Parameter( ParameterSetName = 'VMByName', 'ManagementOS', 'VM' )] [String] $Name,
+                    [Parameter( ParameterSetName = 'VMByName', 'VM' )] [Boolean] $IsLegacy,
+                    [Parameter()] [String] $SwitchName,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $DeviceNaming,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $DhcpGuard,
+                    [Parameter()] [Switch] $DynamicMacAddress,
+                    [Parameter()] [String] $ResourcePoolName,
+                    [Parameter()] [String] $StaticMacAddress,
+                    [Parameter()] [Switch] $Passthru
+                )
+            }
 
             Context 'Legacy Network Adapter does not exist' {
                 Mock Get-VMNetworkAdapter
@@ -184,6 +291,105 @@ try
         }
 
         Describe "$($Global:DSCResourceName)\Set-TargetResource" {
+
+            #Function placeholders
+            function Get-VMNetworkAdapter
+            {
+                [CmdletBinding(
+                    DefaultParameterSetName = 'ManagementOS'
+                )]
+                Param(
+                    [Parameter( ParameterSetName = 'VMByName' )] [String[]] $VMName,
+                    [Parameter( ParameterSetName = 'ManagementOS' )] [Switch]  $ManagementOS,
+                    [Parameter( ParameterSetName = 'VM' )] [VirtualMachine[]] $VM,
+                    [Parameter( Mandatory = $true )] [String] $Name,
+                    [Parameter( ParameterSetName = 'VMByName', 'VM' )] [Boolean] $IsLegacy
+                )
+            }
+            function Set-VMNetworkAdapter
+            {
+                [CmdletBinding(
+                    SupportsShouldProcess = $true,
+                    DefaultParameterSetName = 'ManagementOS'
+                )]
+                Param(
+                    [Parameter( ParameterSetName = 'VMByName' )] [String[]] $VMName,
+                    [Parameter( ParameterSetName = 'ManagementOS' )] [Switch] $ManagementOS,
+                    [Parameter( ParameterSetName = 'VM' )] [VirtualMachine] $VM,
+                    [Parameter( ParameterSetName = 'VMByName', 'ManagementOS', 'VM' )] [String] $Name,
+                    [Parameter( ParameterSetName = 'VMNetworkAdapter' )] [VMNetworkAdapterBase] $VMNetworkAdapter,
+                    [Parameter()] [String] $SwitchName,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $AllowTeaming,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $DeviceNaming,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $DhcpGuard,
+                    [Parameter()] [UInt32] $DynamicIPAddressLimit,
+                    [Parameter()] [Switch] $DynamicMacAddress,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $FixSpeed10G,
+                    [Parameter()] [UInt32] $IPsecOffloadMaximumSecurityAssociation,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $IeeePriorityTag,
+                    [Parameter()] [ValidateSet( 'Default', 'Adaptive', 'Off', 'Low', 'Medium', 'High', ignorecase = $True )] [String] $IovInterruptModeration,
+                    [Parameter()] [UInt32] $IovQueuePairsRequested,
+                    [Parameter()] [UInt32] $IovWeight,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $MacAddressSpoofing,
+                    [Parameter()] [String[]] $MandatoryFeatureId,
+                    [Parameter()] [UInt64] $MaximumBandwidth,
+                    [Parameter()] [UInt64] $MinimumBandwidthAbsolute,
+                    [Parameter()] [UInt32] $MinimumBandwidthWeight,
+                    [Parameter()] [Boolean] $NotMonitoredInCluster,
+                    [Parameter()] [UInt32] $PacketDirectModerationCount,
+                    [Parameter()] [UInt32] $PacketDirectModerationInterval,
+                    [Parameter()] [UInt32] $PacketDirectNumProcs,
+                    [Parameter()] [ValidateSet( 'None', 'Destination', 'Source', ignorecase = $True )] [String] $PortMirroring,
+                    [Parameter()] [String] $ResourcePoolName,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $RouterGuard,
+                    [Parameter()] [String] $StaticMacAddress,
+                    [Parameter()] [UInt32] $StormLimit,
+                    [Parameter()] [String] $TestReplicaPoolName,
+                    [Parameter()] [String] $TestReplicaSwitchName,
+                    [Parameter()] [UInt32] $VirtualSubnetId,
+                    [Parameter()] [Boolean] $VmmqEnabled,
+                    [Parameter()] [UInt32] $VmmqQueuePairs,
+                    [Parameter()] [UInt32] $VmqWeight,
+                    [Parameter()] [Boolean] $VrssEnabled,
+                    [Parameter()] [Switch] $Passthru
+                )
+            }
+            function Remove-VMNetworkAdapter
+            {
+                [CmdletBinding(
+                    SupportsShouldProcess = $true,
+                    DefaultParameterSetName = 'ManagementOS'
+                )]
+                Param(
+                    [Parameter( ParameterSetName = 'VMByName' )] [String[]] $VMName,
+                    [Parameter( ParameterSetName = 'ManagementOS' )] [Switch] $ManagementOS,
+                    [Parameter( ParameterSetName = 'VM' )] [VirtualMachine[]] $VM,
+                    [Parameter( ParameterSetName = 'VMByName', 'ManagementOS', 'VM' )] [String] $Name,
+                    [Parameter( ParameterSetName = 'VMNetworkAdapter' )] [VMNetworkAdapterBase[]] $VMNetworkAdapter,
+                    [Parameter()] [Switch] $Passthru
+                )
+            }
+            function Add-VMNetworkAdapter
+            {
+                [CmdletBinding(
+                    SupportsShouldProcess = $true,
+                    DefaultParameterSetName = 'ManagementOS'
+                )]
+                Param(
+                    [Parameter( ParameterSetName = 'VMByName' )] [String[]] $VMName,
+                    [Parameter( ParameterSetName = 'ManagementOS' )] [Switch] $ManagementOS,
+                    [Parameter( ParameterSetName = 'VM' )] [VirtualMachine[]] $VM,
+                    [Parameter( ParameterSetName = 'VMByName', 'ManagementOS', 'VM' )] [String] $Name,
+                    [Parameter( ParameterSetName = 'VMByName', 'VM' )] [Boolean] $IsLegacy,
+                    [Parameter()] [String] $SwitchName,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $DeviceNaming,
+                    [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $DhcpGuard,
+                    [Parameter()] [Switch] $DynamicMacAddress,
+                    [Parameter()] [String] $ResourcePoolName,
+                    [Parameter()] [String] $StaticMacAddress,
+                    [Parameter()] [Switch] $Passthru
+                )
+            }
 
             $newAdapter = [PSObject]@{
                 Id         = 'UniqueString'
@@ -232,6 +438,106 @@ try
         }
 
         Describe "$($Global:DSCResourceName)\Test-TargetResource" {
+
+             #Function placeholders
+             function Get-VMNetworkAdapter
+             {
+                 [CmdletBinding(
+                     DefaultParameterSetName = 'ManagementOS'
+                 )]
+                 Param(
+                     [Parameter( ParameterSetName = 'VMByName' )] [String[]] $VMName,
+                     [Parameter( ParameterSetName = 'ManagementOS' )] [Switch]  $ManagementOS,
+                     [Parameter( ParameterSetName = 'VM' )] [VirtualMachine[]] $VM,
+                     [Parameter( Mandatory = $true )] [String] $Name,
+                     [Parameter( ParameterSetName = 'VMByName', 'VM' )] [Boolean] $IsLegacy
+                 )
+             }
+             function Set-VMNetworkAdapter
+             {
+                 [CmdletBinding(
+                     SupportsShouldProcess = $true,
+                     DefaultParameterSetName = 'ManagementOS'
+                 )]
+                 Param(
+                     [Parameter( ParameterSetName = 'VMByName' )] [String[]] $VMName,
+                     [Parameter( ParameterSetName = 'ManagementOS' )] [Switch] $ManagementOS,
+                     [Parameter( ParameterSetName = 'VM' )] [VirtualMachine] $VM,
+                     [Parameter( ParameterSetName = 'VMByName', 'ManagementOS', 'VM' )] [String] $Name,
+                     [Parameter( ParameterSetName = 'VMNetworkAdapter' )] [VMNetworkAdapterBase] $VMNetworkAdapter,
+                     [Parameter()] [String] $SwitchName,
+                     [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $AllowTeaming,
+                     [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $DeviceNaming,
+                     [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $DhcpGuard,
+                     [Parameter()] [UInt32] $DynamicIPAddressLimit,
+                     [Parameter()] [Switch] $DynamicMacAddress,
+                     [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $FixSpeed10G,
+                     [Parameter()] [UInt32] $IPsecOffloadMaximumSecurityAssociation,
+                     [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $IeeePriorityTag,
+                     [Parameter()] [ValidateSet( 'Default', 'Adaptive', 'Off', 'Low', 'Medium', 'High', ignorecase = $True )] [String] $IovInterruptModeration,
+                     [Parameter()] [UInt32] $IovQueuePairsRequested,
+                     [Parameter()] [UInt32] $IovWeight,
+                     [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $MacAddressSpoofing,
+                     [Parameter()] [String[]] $MandatoryFeatureId,
+                     [Parameter()] [UInt64] $MaximumBandwidth,
+                     [Parameter()] [UInt64] $MinimumBandwidthAbsolute,
+                     [Parameter()] [UInt32] $MinimumBandwidthWeight,
+                     [Parameter()] [Boolean] $NotMonitoredInCluster,
+                     [Parameter()] [UInt32] $PacketDirectModerationCount,
+                     [Parameter()] [UInt32] $PacketDirectModerationInterval,
+                     [Parameter()] [UInt32] $PacketDirectNumProcs,
+                     [Parameter()] [ValidateSet( 'None', 'Destination', 'Source', ignorecase = $True )] [String] $PortMirroring,
+                     [Parameter()] [String] $ResourcePoolName,
+                     [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $RouterGuard,
+                     [Parameter()] [String] $StaticMacAddress,
+                     [Parameter()] [UInt32] $StormLimit,
+                     [Parameter()] [String] $TestReplicaPoolName,
+                     [Parameter()] [String] $TestReplicaSwitchName,
+                     [Parameter()] [UInt32] $VirtualSubnetId,
+                     [Parameter()] [Boolean] $VmmqEnabled,
+                     [Parameter()] [UInt32] $VmmqQueuePairs,
+                     [Parameter()] [UInt32] $VmqWeight,
+                     [Parameter()] [Boolean] $VrssEnabled,
+                     [Parameter()] [Switch] $Passthru
+                 )
+             }
+             function Remove-VMNetworkAdapter
+             {
+                 [CmdletBinding(
+                     SupportsShouldProcess = $true,
+                     DefaultParameterSetName = 'ManagementOS'
+                 )]
+                 Param(
+                     [Parameter( ParameterSetName = 'VMByName' )] [String[]] $VMName,
+                     [Parameter( ParameterSetName = 'ManagementOS' )] [Switch] $ManagementOS,
+                     [Parameter( ParameterSetName = 'VM' )] [VirtualMachine[]] $VM,
+                     [Parameter( ParameterSetName = 'VMByName', 'ManagementOS', 'VM' )] [String] $Name,
+                     [Parameter( ParameterSetName = 'VMNetworkAdapter' )] [VMNetworkAdapterBase[]] $VMNetworkAdapter,
+                     [Parameter()] [Switch] $Passthru
+                 )
+             }
+             function Add-VMNetworkAdapter
+             {
+                 [CmdletBinding(
+                     SupportsShouldProcess = $true,
+                     DefaultParameterSetName = 'ManagementOS'
+                 )]
+                 Param(
+                     [Parameter( ParameterSetName = 'VMByName' )] [String[]] $VMName,
+                     [Parameter( ParameterSetName = 'ManagementOS' )] [Switch] $ManagementOS,
+                     [Parameter( ParameterSetName = 'VM' )] [VirtualMachine[]] $VM,
+                     [Parameter( ParameterSetName = 'VMByName', 'ManagementOS', 'VM' )] [String] $Name,
+                     [Parameter( ParameterSetName = 'VMByName', 'VM' )] [Boolean] $IsLegacy,
+                     [Parameter()] [String] $SwitchName,
+                     [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $DeviceNaming,
+                     [Parameter()] [ValidateSet( 'On', 'Off', ignorecase = $True )] [String] $DhcpGuard,
+                     [Parameter()] [Switch] $DynamicMacAddress,
+                     [Parameter()] [String] $ResourcePoolName,
+                     [Parameter()] [String] $StaticMacAddress,
+                     [Parameter()] [Switch] $Passthru
+                 )
+             }
+
 
             $newAdapter = [PSObject]@{
                 Id         = 'UniqueString'
