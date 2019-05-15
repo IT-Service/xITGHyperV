@@ -65,23 +65,19 @@ try
             #Function placeholders
             function Get-VMNetworkAdapter
             {
-                Get-Command Get-VMNetworkAdapter -Module HyperV |
-                    Invoke-Command @PSBoundParameters
+                Get-Command Get-VMNetworkAdapter -Module HyperV | Invoke-Command @PSBoundParameters | Out-Null
             }
             function Set-VMNetworkAdapter
             {
-                Get-Command Set-VMNetworkAdapter -Module HyperV |
-                    Invoke-Command @PSBoundParameters -WhatIf
+                Get-Command Set-VMNetworkAdapter -Module HyperV | Invoke-Command @PSBoundParameters -WhatIf
             }
             function Remove-VMNetworkAdapter
             {
-                Get-Command Remove-VMNetworkAdapter -Module HyperV |
-                    Invoke-Command @PSBoundParameters -WhatIf
+                Get-Command Remove-VMNetworkAdapter -Module HyperV | Invoke-Command @PSBoundParameters -WhatIf
             }
             function Add-VMNetworkAdapter
             {
-                Get-Command Add-VMNetworkAdapter -Module HyperV |
-                    Invoke-Command @PSBoundParameters -WhatIf
+                Get-Command Add-VMNetworkAdapter -Module HyperV | Invoke-Command @PSBoundParameters -WhatIf
             }
 
             Context 'Legacy Network Adapter does not exist' {
@@ -98,6 +94,7 @@ try
 
             Context 'Legacy Network Adapter exists' {
                 Mock -CommandName Get-VMNetworkAdapter -MockWith {
+                    Get-Command Get-VMNetworkAdapter -Module HyperV | Invoke-Command @PSBoundParameters | Out-Null
                     $MockAdapter
                 }
 
@@ -108,6 +105,7 @@ try
                     $Result.SwitchName             | Should Be $TestAdapter.SwitchName
                     $Result.VMName                 | Should Be 'ManagementOS'
                     $Result.Id                     | Should Be $TestAdapter.Id
+                    $Result.IsLegacy               | Should Be $True
                 }
                 It 'should call the expected mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
@@ -120,23 +118,19 @@ try
             #Function placeholders
             function Get-VMNetworkAdapter
             {
-                Get-Command Get-VMNetworkAdapter -Module HyperV |
-                    Invoke-Command @PSBoundParameters
+                Get-Command Get-VMNetworkAdapter -Module HyperV | Invoke-Command @PSBoundParameters | Out-Null
             }
             function Set-VMNetworkAdapter
             {
-                Get-Command Set-VMNetworkAdapter -Module HyperV |
-                    Invoke-Command @PSBoundParameters -WhatIf
+                Get-Command Set-VMNetworkAdapter -Module HyperV | Invoke-Command @PSBoundParameters -WhatIf
             }
             function Remove-VMNetworkAdapter
             {
-                Get-Command Remove-VMNetworkAdapter -Module HyperV |
-                    Invoke-Command @PSBoundParameters -WhatIf
+                Get-Command Remove-VMNetworkAdapter -Module HyperV | Invoke-Command @PSBoundParameters -WhatIf
             }
             function Add-VMNetworkAdapter
             {
-                Get-Command Add-VMNetworkAdapter -Module HyperV |
-                    Invoke-Command @PSBoundParameters -WhatIf
+                Get-Command Add-VMNetworkAdapter -Module HyperV | Invoke-Command @PSBoundParameters -WhatIf
             }
 
             $newAdapter = [PSObject]@{
@@ -160,7 +154,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 1
+                    Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
                     Assert-MockCalled -commandName Remove-VMNetworkAdapter -Exactly 0
                 }
             }
@@ -190,23 +184,19 @@ try
             #Function placeholders
             function Get-VMNetworkAdapter
             {
-                Get-Command Get-VMNetworkAdapter -Module HyperV |
-                    Invoke-Command @PSBoundParameters
+                Get-Command Get-VMNetworkAdapter -Module HyperV | Invoke-Command @PSBoundParameters | Out-Null
             }
             function Set-VMNetworkAdapter
             {
-                Get-Command Set-VMNetworkAdapter -Module HyperV |
-                    Invoke-Command @PSBoundParameters -WhatIf
+                Get-Command Set-VMNetworkAdapter -Module HyperV | Invoke-Command @PSBoundParameters -WhatIf
             }
             function Remove-VMNetworkAdapter
             {
-                Get-Command Remove-VMNetworkAdapter -Module HyperV |
-                    Invoke-Command @PSBoundParameters -WhatIf
+                Get-Command Remove-VMNetworkAdapter -Module Hyper | Invoke-Command @PSBoundParameters -WhatIf
             }
             function Add-VMNetworkAdapter
             {
-                Get-Command Add-VMNetworkAdapter -Module HyperV |
-                    Invoke-Command @PSBoundParameters -WhatIf
+                Get-Command Add-VMNetworkAdapter -Module HyperV | Invoke-Command @PSBoundParameters -WhatIf
             }
 
             $newAdapter = [PSObject]@{
@@ -229,7 +219,10 @@ try
             }
 
             Context 'Adapter exists but should not exist' {
-                Mock Get-VMNetworkAdapter -MockWith { $MockAdapter }
+                Mock Get-VMNetworkAdapter -MockWith {
+                    Get-Command Get-VMNetworkAdapter -Module HyperV | Invoke-Command @PSBoundParameters | Out-Null
+                    $MockAdapter
+                }
 
                 It 'should return $false' {
                     $updateAdapter = $newAdapter.Clone()
@@ -242,7 +235,10 @@ try
             }
 
             Context 'Adapter exists and no action needed' {
-                Mock Get-VMNetworkAdapter -MockWith { $MockAdapter }
+                Mock Get-VMNetworkAdapter -MockWith {
+                    Get-Command Get-VMNetworkAdapter -Module HyperV | Invoke-Command @PSBoundParameters | Out-Null
+                    $MockAdapter
+                }
 
                 It 'should return true' {
                     $updateAdapter = $newAdapter.Clone()
@@ -274,4 +270,3 @@ finally
 {
     Invoke-TestCleanup
 }
-
