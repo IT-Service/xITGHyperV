@@ -63,8 +63,7 @@ Function Get-TargetResource
     }
 
     Write-Verbose -Message $localizedData.GetVMNetAdapter
-    $netAdapter = Get-VMNetworkAdapter @arguments -ErrorAction SilentlyContinue |
-        Where-Object { $_.IsLegacy }
+    $netAdapter = Get-VMNetworkAdapter @arguments -IsLegacy $true -ErrorAction SilentlyContinue
 
     if ( $netAdapter )
     {
@@ -153,8 +152,7 @@ Function Set-TargetResource
     }
 
     Write-Verbose -Message $localizedData.GetVMNetAdapter
-    $netAdapterExists = Get-VMNetworkAdapter @arguments -ErrorAction SilentlyContinue |
-        Where-Object { $_.IsLegacy }
+    $netAdapterExists = Get-VMNetworkAdapter @arguments -IsLegacy $true -ErrorAction SilentlyContinue
 
     if ( $Ensure -eq 'Present' )
     {
@@ -224,7 +222,7 @@ Function Set-TargetResource
                 }
                 $arguments.Add( 'SwitchName', $SwitchName )
             }
-            Add-VMNetworkAdapter @arguments -IsLegacy -ErrorAction Stop -Verbose
+            Add-VMNetworkAdapter @arguments -IsLegacy $true -ErrorAction Stop -Verbose
         }
     }
     else
@@ -297,8 +295,7 @@ Function Test-TargetResource
     }
 
     Write-Verbose -Message $localizedData.GetVMNetAdapter
-    $netAdapterExists = Get-VMNetworkAdapter @arguments -ErrorAction SilentlyContinue |
-        Where-Object { $_.IsLegacy }
+    $netAdapterExists = Get-VMNetworkAdapter @arguments -IsLegacy $true -ErrorAction SilentlyContinue
 
     if ( $Ensure -eq 'Present' )
     {
