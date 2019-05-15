@@ -61,6 +61,7 @@ try
         }
 
         Describe "$($Global:DSCResourceName)\Get-TargetResource" {
+
             #Function placeholders
             function Get-VMNetworkAdapter
             {
@@ -74,15 +75,18 @@ try
             function Add-VMNetworkAdapter
             {
             }
+
             Context 'Legacy Network Adapter does not exist' {
-                Mock Get-VMNetworkAdapter
+                Mock Get-VMNetworkAdapter -MockWith {}
+
                 It 'should return ensure as absent' {
                     $Result = Get-TargetResource `
                         @TestAdapter
                     $Result.Ensure | Should Be 'Absent'
                 }
                 It 'should call the expected mocks' {
-                    Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
+                    Assert-MockCalled Get-VMNetworkAdapter -Exactly 1
+                    # Assert-MockCalled Get-VMNetworkAdapter -Exactly 1 -parameterFilter { $IsLegacy }
                 }
             }
 
@@ -101,11 +105,13 @@ try
                 }
                 It 'should call the expected mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
+                    # Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
                 }
             }
         }
 
         Describe "$($Global:DSCResourceName)\Set-TargetResource" {
+
             #Function placeholders
             function Get-VMNetworkAdapter
             {
@@ -119,6 +125,7 @@ try
             function Add-VMNetworkAdapter
             {
             }
+
             $newAdapter = [PSObject]@{
                 Id         = 'UniqueString'
                 Name       = $TestAdapter.Name
@@ -141,6 +148,8 @@ try
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
                     Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 1
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
                     Assert-MockCalled -commandName Remove-VMNetworkAdapter -Exactly 0
                 }
             }
@@ -159,6 +168,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
                     Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 0
                     Assert-MockCalled -commandName Remove-VMNetworkAdapter -Exactly 1
                 }
@@ -166,6 +176,7 @@ try
         }
 
         Describe "$($Global:DSCResourceName)\Test-TargetResource" {
+
             #Function placeholders
             function Get-VMNetworkAdapter
             {
@@ -179,6 +190,8 @@ try
             function Add-VMNetworkAdapter
             {
             }
+
+
             $newAdapter = [PSObject]@{
                 Id         = 'UniqueString'
                 Name       = $TestAdapter.Name
@@ -195,11 +208,14 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
                 }
             }
 
             Context 'Adapter exists but should not exist' {
-                Mock Get-VMNetworkAdapter -MockWith { $MockAdapter }
+                Mock Get-VMNetworkAdapter -MockWith {
+                    $MockAdapter
+                }
 
                 It 'should return $false' {
                     $updateAdapter = $newAdapter.Clone()
@@ -208,11 +224,14 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
                 }
             }
 
             Context 'Adapter exists and no action needed' {
-                Mock Get-VMNetworkAdapter -MockWith { $MockAdapter }
+                Mock Get-VMNetworkAdapter -MockWith {
+                    $MockAdapter
+                }
 
                 It 'should return true' {
                     $updateAdapter = $newAdapter.Clone()
@@ -220,6 +239,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
                 }
             }
 
@@ -233,6 +253,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
                 }
             }
         }
@@ -244,4 +265,3 @@ finally
 {
     Invoke-TestCleanup
 }
-
