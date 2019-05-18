@@ -10,6 +10,9 @@ $script:localizedData = Get-LocalizedData -ResourceName 'ITG_xVMComPort'
 .SYNOPSIS
     Gets ITG_xVMComPort resource current state.
 
+.PARAMETER Id
+    Specifies an unique identifier for the serial port (unused).
+
 .PARAMETER VMName
     Specifies the name of the VM to which serial port will be connected.
 
@@ -21,6 +24,9 @@ Function Get-TargetResource
     [CmdletBinding()]
     [OutputType([System.Collections.Hashtable])]
     Param (
+        [Parameter(Mandatory = $true)]
+        [String] $Id,
+
         [Parameter(Mandatory = $true)]
         [String] $VMName,
 
@@ -59,6 +65,9 @@ Function Get-TargetResource
 .SYNOPSIS
     Sets ITG_xVMComPort resource state.
 
+.PARAMETER Id
+    Specifies an unique identifier for the serial port (unused).
+
 .PARAMETER VMName
     Specifies the name of the VM to which serial port will be connected.
 
@@ -75,6 +84,9 @@ Function Set-TargetResource
 {
     [CmdletBinding()]
     Param (
+        [Parameter(Mandatory = $true)]
+        [String] $Id,
+
         [Parameter(Mandatory = $true)]
         [String] $VMName,
 
@@ -135,6 +147,9 @@ Function Set-TargetResource
 .SYNOPSIS
     Tests if ITG_xVMComPort resource state is indeed desired state or not.
 
+.PARAMETER Id
+    Specifies an unique identifier for the serial port (unused).
+
 .PARAMETER VMName
     Specifies the name of the VM to which serial port will be connected.
 
@@ -152,6 +167,9 @@ Function Test-TargetResource
     [CmdletBinding()]
     [OutputType([System.Boolean])]
     Param (
+        [Parameter(Mandatory = $true)]
+        [String] $Id,
+
         [Parameter(Mandatory = $true)]
         [String] $VMName,
 

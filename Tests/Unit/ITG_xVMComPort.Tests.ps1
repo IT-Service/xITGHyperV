@@ -39,6 +39,7 @@ try
 
         # Create the Mock Objects that will be used for running tests
         $TestPort = [PSObject]@{
+            Id     = 'VM01COM5'
             VMName = 'VM01'
             Number = 5
         }
@@ -100,6 +101,7 @@ try
             }
 
             $NewPort = [PSObject]@{
+                Id     = 'VM01COM1'
                 VMName = 'VM01'
                 Number = 1
                 Path   = '\\.\pipe\testpipe'
@@ -178,6 +180,7 @@ try
             }
 
             $NewPort = [PSObject]@{
+                Id     = 'VM01COM1'
                 VMName = 'VM01'
                 Number = 2
                 Path   = '\\.\pipe\testpipe2'

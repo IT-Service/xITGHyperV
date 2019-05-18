@@ -33,6 +33,7 @@ Configuration ITG_xVMComPort_Create_Config
     {
         xVMComPort 'Integration_Test'
         {
+            Id = "$($Node.VMName)COM$($Node.Number)"
             VMName = $Node.VMName
             Number = $Node.Number
             Path = $Node.Path
@@ -50,6 +51,7 @@ Configuration ITG_xVMComPort_Remove_Config
     {
         xVMComPort 'Integration_Test'
         {
+            Id = "$($Node.VMName)COM$($Node.Number)"
             VMName = $Node.VMName
             Number = $Node.Number
             Path = ''
