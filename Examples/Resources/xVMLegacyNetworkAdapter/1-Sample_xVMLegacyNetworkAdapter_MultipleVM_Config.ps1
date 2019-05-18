@@ -2,7 +2,7 @@
 .VERSION 1.0.2
 .GUID 0d00c0be-77d1-4170-ae48-7ba5fdd807e7
 .AUTHOR Sergei S. Betke
-.COMPANYNAME ФБУ "Тест-С.-Петербург"
+.COMPANYNAME Test-St-Petersburg
 .COPYRIGHT Sergei S. Betke
 .TAGS DSCConfiguration
 .LICENSEURI https://github.com/IT-Service/xITGHyperV//blob/master/LICENSE
