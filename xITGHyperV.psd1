@@ -4,7 +4,7 @@
     # CompatiblePSEditions = @()
 
     # Version number of this module.
-    ModuleVersion      = '1.1.0.80'
+    ModuleVersion      = '1.1.1.80'
 
     # ID used to uniquely identify this module
     GUID               = '274a6c3f-5633-4487-aed1-e4130db26a51'
@@ -83,8 +83,8 @@
 
             # ReleaseNotes of this module
             ReleaseNotes               = @'
-## New features
-+ Add xVMComPort DSC Resource (#8)
+## Bug fixes
+- Fix readme.md (xVMComPort Number property type)
 
 '@
 
