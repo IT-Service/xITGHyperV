@@ -93,8 +93,8 @@ Function Set-TargetResource
         [Parameter(Mandatory = $true)]
         [System.UInt16] $Number,
 
-        [Parameter(Mandatory = $true)]
-        [System.String] $Path,
+        [Parameter()]
+        [System.String] $Path = '',
 
         [Parameter()]
         [ValidateSet('Present', 'Absent')]
@@ -176,8 +176,8 @@ Function Test-TargetResource
         [Parameter(Mandatory = $true)]
         [System.UInt16] $Number,
 
-        [Parameter(Mandatory = $true)]
-        [System.String] $Path,
+        [Parameter()]
+        [System.String] $Path = '',
 
         [Parameter()]
         [ValidateSet('Present', 'Absent')]
