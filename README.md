@@ -37,6 +37,8 @@ A full list of changes in each version can be found in the [change log](CHANGELO
 
 * [**xVMLegacyNetworkAdapter**](#xvmlegacynetworkadapter) manages legacy
  VM network adapters attached to a Hyper-V virtual machine.
+* [**xVMComPort**](#xvmcomport) manages
+ VM serial ports attached to a Hyper-V virtual machine.
 
 ### xVMLegacyNetworkAdapter
 
@@ -67,3 +69,24 @@ Manages legacy VM Network adapters attached to a Hyper-V virtual machine.
  Dynamic MAC Address.
 
 * [Add multiple VM Network adapters to a VM](https://github.com/IT-Service/xITGHyperV/blob/feature/xITGHyperV/Examples/Resources/xVMLegacyNetworkAdapter/1-Sample_xVMLegacyNetworkAdapter_MultipleVM_Config.ps1)
+
+### xVMComPort
+
+Manages VM serial ports attached to a Hyper-V virtual machine.
+
+#### Requirements for xVMComPort
+
+* The Hyper-V Role has to be installed on the machine.
+* The Hyper-V PowerShell module has to be installed on the machine.
+
+#### Parameters for xVMComPort
+
+* **`[String]` VMName** _(Required)_: Name of the VM to attach to.
+* **`[String]` Number** _(Required)_: serial port number.
+* **`[String]` Path** _(Write)_: named pipe path or empty string.
+ If this parameter is not specified, serial port detached from any named pipes.
+* **`[String]` Ensure** _(Write)_: Ensures that the VM serial port is
+ Present or Absent. The default value is Present. { *Present* | Absent }.
+ Now supported only Present.
+
+* [Attach VM serial port to a named pipe](https://github.com/IT-Service/xITGHyperV/blob/feature/xITGHyperV/Examples/Resources/xVMComPort/1-Sample_xVMComPort_Config.ps1)

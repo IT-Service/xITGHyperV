@@ -1,0 +1,8 @@
+[ClassVersion("1.0.0.16"), FriendlyName("xVMComPort")]
+class ITG_xVMComPort : OMI_BaseResource
+{
+    [Required] String VMName;
+    [Required] Int16 Number;
+    [Write] String Path;
+    [Write, ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
+};

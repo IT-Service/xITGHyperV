@@ -1,6 +1,6 @@
 @{
     # Version number of this module.
-    moduleVersion      = '1.0.8.70'
+    moduleVersion      = '1.1.0.80'
 
     # ID used to uniquely identify this module
     GUID               = '274a6c3f-5633-4487-aed1-e4130db26a51'
@@ -31,6 +31,10 @@
 
     RequiredAssemblies = @()
 
+    RequiredModules    = @(
+        @{ ModuleName = 'xHyper-V'; ModuleVersion = '3.16.0.0' }
+    )
+
     # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
     PrivateData        = @{
 
@@ -46,7 +50,17 @@
             ProjectUri   = 'https://github.com/IT-Service/xITGHyperV'
 
             # ReleaseNotes of this module
-            ReleaseNotes = ''
+            ReleaseNotes = @'
+## 1.1.0
+
+New features
++ Add xVMComPort DSC Resource (#8)
+
+## 1.0
+
++ xVMLegacyNetworkAdapter DSC Resource
+
+'@
 
         } # End of PSData hash table
 
