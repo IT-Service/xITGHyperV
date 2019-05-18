@@ -67,7 +67,7 @@ Configuration Sample_xVMComPort_Config
 
     node $NodeName
     {
-        xVMLegacyNetworkAdapter VM01COM1 {
+        xVMComPort VM01COM1 {
             Id = 'VM01COM01'
             VMName = 'VM01'
             Number = $SerialPortNumber

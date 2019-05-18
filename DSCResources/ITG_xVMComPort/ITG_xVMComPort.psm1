@@ -31,7 +31,7 @@ Function Get-TargetResource
         [String] $VMName,
 
         [Parameter(Mandatory = $true)]
-        [Int16] $Number
+        [UInt8] $Number
     )
 
     $configuration = @{
@@ -91,7 +91,7 @@ Function Set-TargetResource
         [String] $VMName,
 
         [Parameter(Mandatory = $true)]
-        [Int16] $Number,
+        [UInt8] $Number,
 
         [Parameter(Mandatory = $true)]
         [String] $Path,
@@ -174,10 +174,10 @@ Function Test-TargetResource
         [String] $VMName,
 
         [Parameter(Mandatory = $true)]
-        [Int16] $Number,
+        [UInt8] $Number,
 
         [Parameter(Mandatory = $true)]
-        [String] $Path = '',
+        [String] $Path,
 
         [Parameter()]
         [ValidateSet('Present', 'Absent')]
