@@ -83,7 +83,7 @@ Manages VM serial ports attached to a Hyper-V virtual machine.
 
 * **`[String]` Id** _(Key)_: Unique string for identifying the resource instance.
 * **`[String]` VMName** _(Required)_: Name of the VM to attach to.
-* **`[String]` Number** _(Required)_: serial port number.
+* **`[UInt16]` Number** _(Required)_: serial port number.
 * **`[String]` Path** _(Write)_: named pipe path or empty string.
  If this parameter is not specified, serial port detached from any named pipes.
 * **`[String]` Ensure** _(Write)_: Ensures that the VM serial port is
