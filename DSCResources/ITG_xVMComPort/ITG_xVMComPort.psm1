@@ -176,7 +176,7 @@ Function Test-TargetResource
         [Parameter(Mandatory = $true)]
         [Int16] $Number,
 
-        [Parameter()]
+        [Parameter(Mandatory = $true)]
         [String] $Path = '',
 
         [Parameter()]
