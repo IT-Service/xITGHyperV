@@ -126,7 +126,7 @@ Function Set-TargetResource
         else
         {
             Write-Verbose -Message $localizedData.VMComPortDoesNotExistShouldAdd
-            Write-Error -Message $localizedData.VMComPortCreationDoesNotSupported
+            Write-Error -Message $localizedData.VMComPortCreationDoesNotSupported -ErrorAction Stop
         }
     }
     else
@@ -134,7 +134,7 @@ Function Set-TargetResource
         if ( $serialPortExists )
         {
             Write-Verbose -Message $localizedData.VMComPortExistsShouldRemove
-            Write-Error -Message $localizedData.VMComPortRemovingDoesNotSupported
+            Write-Error -Message $localizedData.VMComPortRemovingDoesNotSupported -ErrorAction Stop
         }
         else
         {
