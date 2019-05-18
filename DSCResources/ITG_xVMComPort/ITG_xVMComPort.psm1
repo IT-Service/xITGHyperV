@@ -25,13 +25,13 @@ Function Get-TargetResource
     [OutputType([System.Collections.Hashtable])]
     Param (
         [Parameter(Mandatory = $true)]
-        [String] $Id,
+        [System.String] $Id,
 
         [Parameter(Mandatory = $true)]
-        [String] $VMName,
+        [System.String] $VMName,
 
         [Parameter(Mandatory = $true)]
-        [UInt8] $Number
+        [System.UInt16] $Number
     )
 
     $configuration = @{
@@ -85,20 +85,20 @@ Function Set-TargetResource
     [CmdletBinding()]
     Param (
         [Parameter(Mandatory = $true)]
-        [String] $Id,
+        [System.String] $Id,
 
         [Parameter(Mandatory = $true)]
-        [String] $VMName,
+        [System.String] $VMName,
 
         [Parameter(Mandatory = $true)]
-        [UInt8] $Number,
+        [System.UInt16] $Number,
 
         [Parameter(Mandatory = $true)]
-        [String] $Path,
+        [System.String] $Path,
 
         [Parameter()]
         [ValidateSet('Present', 'Absent')]
-        [String] $Ensure = 'Present'
+        [System.String] $Ensure = 'Present'
     )
 
     $arguments = @{
@@ -168,20 +168,20 @@ Function Test-TargetResource
     [OutputType([System.Boolean])]
     Param (
         [Parameter(Mandatory = $true)]
-        [String] $Id,
+        [System.String] $Id,
 
         [Parameter(Mandatory = $true)]
-        [String] $VMName,
+        [System.String] $VMName,
 
         [Parameter(Mandatory = $true)]
-        [UInt8] $Number,
+        [System.UInt16] $Number,
 
         [Parameter(Mandatory = $true)]
-        [String] $Path,
+        [System.String] $Path,
 
         [Parameter()]
         [ValidateSet('Present', 'Absent')]
-        [String] $Ensure = 'Present'
+        [System.String] $Ensure = 'Present'
     )
 
     $arguments = @{

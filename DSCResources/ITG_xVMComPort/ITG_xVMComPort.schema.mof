@@ -3,7 +3,7 @@ class ITG_xVMComPort : OMI_BaseResource
 {
     [Key] String Id;
     [Required] String VMName;
-    [Required] uint8 Number;
+    [Required] UInt16 Number;
     [Write] String Path;
     [Write, ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
 };

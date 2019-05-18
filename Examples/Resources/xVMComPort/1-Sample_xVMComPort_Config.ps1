@@ -54,7 +54,7 @@ Configuration Sample_xVMComPort_Config
         $NodeName = 'localhost',
 
         [Parameter()]
-        [System.Int16]
+        [System.UInt16]
         $SerialPortNumber = 1,
 
         [Parameter()]
