@@ -107,6 +107,13 @@ try
                 Path   = '\\.\pipe\testpipe'
                 Ensure = 'Present'
             }
+            $RemovePort = [PSObject]@{
+                Id     = $NewPort.Id
+                VMName = $NewPort.VMName
+                Number = $NewPort.Number
+                Path   = $NewPort.Path
+                Ensure = 'Absent'
+            }
             $MockPort = [PSObject]@{
                 VMName = $NewPort.VMName
                 Name   = "COM $($NewPort.Number)"
@@ -167,6 +174,38 @@ try
                 }
             }
 
+            Context 'Serial port exists but not should' {
+                Mock Get-VMComPort -MockWith {
+                    $NewMockPort
+                }
+                Mock Set-VMComPort
+
+                It 'should throw error' {
+                    {
+                        Set-TargetResource @RemovePort
+                    } | Should Throw
+                }
+                It 'should call expected Mocks' {
+                    Assert-MockCalled -commandName Get-VMComPort -Exactly 1
+                    Assert-MockCalled -commandName Set-VMComPort -Exactly 0
+                }
+            }
+
+            Context 'Serial port does not exists and no action needed' {
+                Mock Get-VMComPort
+                Mock Set-VMComPort
+
+                It 'should not throw error' {
+                    {
+                        Set-TargetResource @RemovePort
+                    } | Should Not Throw
+                }
+                It 'should call expected Mocks' {
+                    Assert-MockCalled -commandName Get-VMComPort -Exactly 1
+                    Assert-MockCalled -commandName Set-VMComPort -Exactly 0
+                }
+            }
+
         }
 
         Describe "$($Global:DSCResourceName)\Test-TargetResource" {
@@ -185,6 +224,13 @@ try
                 Number = 2
                 Path   = '\\.\pipe\testpipe2'
                 Ensure = 'Present'
+            }
+            $RemovePort = [PSObject]@{
+                Id     = $NewPort.Id
+                VMName = $NewPort.VMName
+                Number = $NewPort.Number
+                Path   = $NewPort.Path
+                Ensure = 'Absent'
             }
             $MockPort = [PSObject]@{
                 VMName = $NewPort.VMName
@@ -215,6 +261,43 @@ try
 
                 It 'should return true' {
                     Test-TargetResource @NewPort | Should be $true
+                }
+                It 'should call expected Mocks' {
+                    Assert-MockCalled -commandName Get-VMComPort -Exactly 1
+                }
+            }
+
+            Context 'Serial port exists but Path is different' {
+                Mock Get-VMComPort -MockWith {
+                    $MockPort
+                }
+
+                It 'should return false' {
+                    Test-TargetResource @NewPort | Should be $false
+                }
+                It 'should call expected Mocks' {
+                    Assert-MockCalled -commandName Get-VMComPort -Exactly 1
+                }
+            }
+
+            Context 'Serial port does not exist and no action needed' {
+                Mock Get-VMComPort
+
+                It 'should return true' {
+                    Test-TargetResource @RemovePort | Should be $true
+                }
+                It 'should call expected Mocks' {
+                    Assert-MockCalled -commandName Get-VMComPort -Exactly 1
+                }
+            }
+
+            Context 'Serial port exists but not should' {
+                Mock Get-VMComPort -MockWith {
+                    $NewMockPort
+                }
+
+                It 'should return false' {
+                    Test-TargetResource @RemovePort | Should be $false
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMComPort -Exactly 1
