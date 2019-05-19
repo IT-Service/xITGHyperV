@@ -14,6 +14,8 @@
         "betke",
         "markdownlint",
         "codecov",
+        "Recurse",
+        "PreRelease",
         "Veyor"
     ],
     "ignoreRegExpList": [

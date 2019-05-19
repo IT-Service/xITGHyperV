@@ -63,6 +63,6 @@ deploy_script:
         if ( $deploy )
         {
           git clean -ffdx
-          Remove-Item -Path '.*','Examples','Tests' -Recurse -Force
+          Remove-Item -Path '.*','Examples','Tests','*.json' -Recurse -Force
           Publish-Module -Path . -NuGetApiKey $env:gallery_api
         }
