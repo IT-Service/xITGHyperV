@@ -43,7 +43,7 @@ before_deploy:
       ${env:ReleaseNotes} = ( Import-Module $env:APPVEYOR_BUILD_FOLDER -Force -PassThru ).ReleaseNotes;
 deploy:
   - provider: Environment
-    name: GitHub-Releases
+    name: GitHub Releases (default)
     description: $(ReleaseNotes)
     on:
       branch: master
