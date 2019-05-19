@@ -2,7 +2,7 @@
 #      environment configuration  #
 #---------------------------------#
 
-version: 1.1.2.{build}
+version: 1.1.3.{build}
 environment:
   gallery_api:
     secure: lbDrWTaiRIaEUnUacZbYJHSaCGvAZfz8HsfoaE5uc5NuoebPCvptrlXzRTHN10v9
@@ -42,12 +42,20 @@ before_deploy:
   - ps: >-
       ${env:ReleaseNotes} = ( Import-Module $env:APPVEYOR_BUILD_FOLDER -Force -PassThru ).ReleaseNotes;
 deploy:
-  - provider: Environment
-    name: GitHub Releases (default)
+  - provider: GitHub
+    tag: $(APPVEYOR_REPO_TAG_NAME)
+    release: $(APPVEYOR_REPO_TAG_NAME)
     description: $(ReleaseNotes)
+    auth_token:
+      secure: H6HQrXUd6e0XBLfgdcrQ7T78c3+NTlMF92eBHy79j9W1n20zW8uJDNKzk0v82VM9
+    artifact:
+    draft: false
+    prerelease: false
+    force_update: false
     on:
       branch: master
-      appveyor_repo_tag: true
+      APPVEYOR_REPO_TAG: true
+
 deploy_script:
   - ps: |
         $ErrorActionPreference = 'Continue'
@@ -55,6 +63,6 @@ deploy_script:
         if ( $deploy )
         {
           git clean -ffdx
-          Remove-Item -Path '.*','Examples','Tests' -Recurse -Force
+          Remove-Item -Path '.*','Examples','Tests','*.json' -Recurse -Force
           Publish-Module -Path . -NuGetApiKey $env:gallery_api
         }
