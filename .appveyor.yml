@@ -2,7 +2,7 @@
 #      environment configuration  #
 #---------------------------------#
 
-version: 1.1.1.{build}
+version: 1.1.2.{build}
 environment:
   gallery_api:
     secure: lbDrWTaiRIaEUnUacZbYJHSaCGvAZfz8HsfoaE5uc5NuoebPCvptrlXzRTHN10v9
@@ -38,6 +38,16 @@ after_test:
 #      deployment configuration   #
 #---------------------------------#
 
+before_deploy:
+  - ps: >-
+      ${env:ReleaseNotes} = ( Import-Module $env:APPVEYOR_BUILD_FOLDER -Force -PassThru ).ReleaseNotes;
+deploy:
+  - provider: Environment
+    name: GitHub Releases (default)
+    description: $(ReleaseNotes)
+    on:
+      branch: master
+      appveyor_repo_tag: true
 deploy_script:
   - ps: |
         $ErrorActionPreference = 'Continue'
