@@ -240,7 +240,6 @@ try
             }
 
             Context 'Adapter does not exist but should' {
-
                 Mock Get-VMNetworkAdapter
                 Mock Add-VMNetworkAdapter
                 Mock Remove-VMNetworkAdapter
@@ -264,7 +263,6 @@ try
                 }
             }
             Context 'VM Adapter does not exist but should' {
-
                 Mock Get-VMNetworkAdapter
                 Mock Add-VMNetworkAdapter
                 Mock Remove-VMNetworkAdapter
@@ -288,16 +286,25 @@ try
                 }
             }
             Context 'Adapter exists but should not exist' {
-                Mock Get-VMNetworkAdapter
+                Mock -CommandName Get-VMNetworkAdapter -MockWith {
+                    return [PSObject] @{
+                        Name       = 'NIC04'
+                        SwitchName = 'Switch04'
+                        VMName     = 'ManagementOS'
+                        IsLegacy   = $True
+                    }
+                }
                 Mock Add-VMNetworkAdapter
                 Mock Remove-VMNetworkAdapter
 
                 It 'should not throw error' {
                     {
-                        # TODO: исправить!!!
-                        $updateAdapter = $newAdapter.Clone()
-                        $updateAdapter.Ensure = 'Absent'
-                        Set-TargetResource @updateAdapter
+                        Set-TargetResource `
+                            -Id 'Id04' `
+                            -Name 'NIC04' `
+                            -SwitchName 'Switch04' `
+                            -VMName 'ManagementOS' `
+                            -Ensure 'Absent'
                     } | Should Not Throw
                 }
                 It 'should call expected Mocks' {
@@ -308,16 +315,26 @@ try
                 }
             }
             Context 'VM Adapter exists but should not exist' {
-                Mock Get-VMNetworkAdapter
+                Mock -CommandName Get-VMNetworkAdapter -MockWith {
+                    return [PSObject] @{
+                        Name                     = 'NIC04'
+                        SwitchName               = 'Switch04'
+                        VMName                   = 'VM04'
+                        DynamicMacAddressEnabled = $True
+                        IsLegacy                 = $True
+                    }
+                }
                 Mock Add-VMNetworkAdapter
                 Mock Remove-VMNetworkAdapter
 
                 It 'should not throw error' {
                     {
-                        # TODO: исправить!!!
-                        $updateAdapter = $newVMAdapter.Clone()
-                        $updateAdapter.Ensure = 'Absent'
-                        Set-TargetResource @updateAdapter
+                        Set-TargetResource `
+                            -Id 'Id04' `
+                            -Name 'NIC04' `
+                            -SwitchName 'Switch04' `
+                            -VMName 'VM04' `
+                            -Ensure 'Absent'
                     } | Should Not Throw
                 }
                 It 'should call expected Mocks' {
@@ -328,8 +345,14 @@ try
                 }
             }
             Context 'VM Adapter exists but switch different' {
-                Mock Get-VMNetworkAdapter -MockWith {
-                    $MockVMAdapter
+                Mock -CommandName Get-VMNetworkAdapter -MockWith {
+                    return [PSObject] @{
+                        Name                     = 'NIC04'
+                        SwitchName               = 'SwitchDifferent'
+                        VMName                   = 'VM04'
+                        DynamicMacAddressEnabled = $True
+                        IsLegacy                 = $True
+                    }
                 }
                 Mock Add-VMNetworkAdapter
                 Mock Remove-VMNetworkAdapter
@@ -337,10 +360,12 @@ try
 
                 It 'should not throw error' {
                     {
-                        # TODO: исправить!!!
-                        $updateAdapter = $newVMAdapter.Clone()
-                        $updateAdapter.SwitchName = 'AnotherSwitch'
-                        Set-TargetResource @updateAdapter
+                        Set-TargetResource `
+                            -Id 'Id04' `
+                            -Name 'NIC04' `
+                            -SwitchName 'Switch04' `
+                            -VMName 'VM04' `
+                            -Ensure 'Present'
                     } | Should Not Throw
                 }
                 It 'should call expected Mocks' {
