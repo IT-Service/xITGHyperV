@@ -450,13 +450,66 @@ try
                     #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
                 }
             }
-            Context 'VM Adapter exists but with different MAC address' {
+            Context 'VM Adapter exists but with dynamic MAC address' {
                 Mock -CommandName Get-VMNetworkAdapter -MockWith {
                     return [PSObject] @{
                         Name                     = 'NIC10'
                         SwitchName               = 'Switch10'
                         VMName                   = 'VM10'
                         DynamicMacAddressEnabled = $True
+                        IsLegacy                 = $True
+                    }
+                }
+
+                It 'should return true' {
+                    Test-TargetResource `
+                        -Id 'Id10' `
+                        -Name 'NIC10' `
+                        -SwitchName 'Switch10' `
+                        -VMName 'VM10' `
+                        -MacAddress '14FEB5C6CE98' `
+                        -Ensure 'Present' `
+                        | Should be $False
+                }
+                It 'should call expected Mocks' {
+                    Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                }
+            }
+            Context 'VM Adapter exists but with static MAC address' {
+                Mock -CommandName Get-VMNetworkAdapter -MockWith {
+                    return [PSObject] @{
+                        Name                     = 'NIC10'
+                        SwitchName               = 'Switch10'
+                        VMName                   = 'VM10'
+                        DynamicMacAddressEnabled = $False
+                        MacAddress               = '14FEB5C6CE98'
+                        IsLegacy                 = $True
+                    }
+                }
+
+                It 'should return true' {
+                    Test-TargetResource `
+                        -Id 'Id10' `
+                        -Name 'NIC10' `
+                        -SwitchName 'Switch10' `
+                        -VMName 'VM10' `
+                        -Ensure 'Present' `
+                        | Should be $False
+                }
+                It 'should call expected Mocks' {
+                    Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                }
+            }
+            Context 'VM Adapter exists but with different MAC address' {
+                Mock -CommandName Get-VMNetworkAdapter -MockWith {
+                    return [PSObject] @{
+                        Name                     = 'NIC10'
+                        SwitchName               = 'Switch10'
+                        VMName                   = 'VM10'
+                        DynamicMacAddressEnabled = $false
+                        MacAddress               = '14FEB5C6CE99'
                         IsLegacy                 = $True
                     }
                 }
