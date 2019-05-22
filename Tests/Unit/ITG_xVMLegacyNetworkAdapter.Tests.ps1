@@ -133,7 +133,10 @@ try
 
                 It 'should return ensure as absent' {
                     $Result = Get-TargetResource `
-                        @TestAdapter
+                        -Id 'Id1' `
+                        -Name 'HostNIC1' `
+                        -SwitchName 'HostSwitch' `
+                        -VMName 'ManagementOS'
                     $Result.Ensure | Should Be 'Absent'
                 }
                 It 'should call the expected mocks' {
@@ -143,16 +146,27 @@ try
             }
             Context 'Legacy Network Adapter exists' {
                 Mock -CommandName Get-VMNetworkAdapter -MockWith {
-                    $MockAdapter
+                    return [PSObject] @{
+                        Name                     = 'HostNIC1'
+                        SwitchName               = 'HostSwitch'
+                        VMName                   = 'ManagementOS'
+                        MacAddress               = '14FEB5C6CE98'
+                        DynamicMacAddressEnabled = $False
+                        IsLegacy                 = $True
+                    }
                 }
 
                 It 'should return adapter properties' {
-                    $Result = Get-TargetResource @TestAdapter
+                    $Result = Get-TargetResource `
+                        -Id 'Id1' `
+                        -Name 'HostNIC1' `
+                        -SwitchName 'HostSwitch' `
+                        -VMName 'ManagementOS'
                     $Result.Ensure                 | Should Be 'Present'
-                    $Result.Name                   | Should Be $TestAdapter.Name
-                    $Result.SwitchName             | Should Be $TestAdapter.SwitchName
+                    $Result.Name                   | Should Be 'HostNIC1'
+                    $Result.SwitchName             | Should Be 'HostSwitch'
                     $Result.VMName                 | Should Be 'ManagementOS'
-                    $Result.Id                     | Should Be $TestAdapter.Id
+                    $Result.Id                     | Should Be 'Id1'
                 }
                 It 'should call the expected mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
@@ -164,7 +178,10 @@ try
 
                 It 'should return ensure as absent' {
                     $Result = Get-TargetResource `
-                        @TestVMAdapter
+                        -Id 'Id1' `
+                        -Name 'HostNIC1' `
+                        -SwitchName 'HostSwitch' `
+                        -VMName 'VM01'
                     $Result.Ensure | Should Be 'Absent'
                 }
                 It 'should call the expected mocks' {
@@ -174,16 +191,26 @@ try
             }
             Context 'Legacy VM Network Adapter exists' {
                 Mock -CommandName Get-VMNetworkAdapter -MockWith {
-                    $MockVMAdapter
+                    return [PSObject] @{
+                        Name                     = 'HostNIC1'
+                        SwitchName               = 'HostSwitch'
+                        VMName                   = 'VM02'
+                        DynamicMacAddressEnabled = $True
+                        IsLegacy                 = $True
+                    }
                 }
 
                 It 'should return adapter properties' {
-                    $Result = Get-TargetResource @TestVMAdapter
+                    $Result = Get-TargetResource `
+                        -Id 'Id3' `
+                        -Name 'HostNIC1' `
+                        -SwitchName 'HostSwitch' `
+                        -VMName 'VM02'
                     $Result.Ensure                 | Should Be 'Present'
-                    $Result.Name                   | Should Be $TestVMAdapter.Name
-                    $Result.SwitchName             | Should Be $TestVMAdapter.SwitchName
-                    $Result.VMName                 | Should Be $TestVMAdapter.VMName
-                    $Result.Id                     | Should Be $TestVMAdapter.Id
+                    $Result.Name                   | Should Be 'HostNIC1'
+                    $Result.SwitchName             | Should Be 'HostSwitch'
+                    $Result.VMName                 | Should Be 'VM02'
+                    $Result.Id                     | Should Be 'Id3'
                 }
                 It 'should call the expected mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
@@ -220,7 +247,12 @@ try
 
                 It 'should not throw error' {
                     {
-                        Set-TargetResource @newAdapter
+                        Set-TargetResource `
+                            -Id 'Id04' `
+                            -Name 'NIC04' `
+                            -SwitchName 'Switch04' `
+                            -VMName 'ManagementOS' `
+                            -Ensure 'Present'
                     } | Should Not Throw
                 }
                 It 'should call expected Mocks' {
@@ -239,7 +271,12 @@ try
 
                 It 'should not throw error' {
                     {
-                        Set-TargetResource @newVMAdapter
+                        Set-TargetResource `
+                            -Id 'Id04' `
+                            -Name 'NIC04' `
+                            -SwitchName 'Switch04' `
+                            -VMName 'VM04' `
+                            -Ensure 'Present'
                     } | Should Not Throw
                 }
                 It 'should call expected Mocks' {
@@ -257,6 +294,7 @@ try
 
                 It 'should not throw error' {
                     {
+                        # TODO: исправить!!!
                         $updateAdapter = $newAdapter.Clone()
                         $updateAdapter.Ensure = 'Absent'
                         Set-TargetResource @updateAdapter
@@ -276,6 +314,7 @@ try
 
                 It 'should not throw error' {
                     {
+                        # TODO: исправить!!!
                         $updateAdapter = $newVMAdapter.Clone()
                         $updateAdapter.Ensure = 'Absent'
                         Set-TargetResource @updateAdapter
@@ -298,6 +337,7 @@ try
 
                 It 'should not throw error' {
                     {
+                        # TODO: исправить!!!
                         $updateAdapter = $newVMAdapter.Clone()
                         $updateAdapter.SwitchName = 'AnotherSwitch'
                         Set-TargetResource @updateAdapter
@@ -344,7 +384,13 @@ try
                 Mock Get-VMNetworkAdapter
 
                 It 'should return false' {
-                    Test-TargetResource @newVMAdapter | Should be $false
+                    Test-TargetResource `
+                        -Id 'Id04' `
+                        -Name 'NIC04' `
+                        -SwitchName 'Switch04' `
+                        -VMName 'VM04' `
+                        -Ensure 'Present' `
+                        | Should be $false
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
@@ -357,6 +403,7 @@ try
                 }
 
                 It 'should return $false' {
+                    # TODO: исправить!!!
                     $updateAdapter = $newAdapter.Clone()
                     $updateAdapter.Ensure = 'Absent'
                     Test-TargetResource @updateAdapter | Should Be $false
@@ -372,6 +419,7 @@ try
                 }
 
                 It 'should return $false' {
+                    # TODO: исправить!!!
                     $updateAdapter = $newVMAdapter.Clone()
                     $updateAdapter.Ensure = 'Absent'
                     Test-TargetResource @updateAdapter | Should Be $false
@@ -387,6 +435,7 @@ try
                 }
 
                 It 'should return true' {
+                    # TODO: исправить!!!
                     $updateAdapter = $newAdapter.Clone()
                     Test-TargetResource @updateAdapter | Should Be $true
                 }
@@ -401,6 +450,7 @@ try
                 }
 
                 It 'should return true' {
+                    # TODO: исправить!!!
                     $updateAdapter = $TestVMAdapter2.Clone()
                     Test-TargetResource @updateAdapter | Should Be $true
                 }
@@ -413,6 +463,7 @@ try
                 Mock Get-VMNetworkAdapter
 
                 It 'should return true' {
+                    # TODO: исправить!!!
                     $updateAdapter = $newAdapter.Clone()
                     $updateAdapter.Ensure = 'Absent'
                     Test-TargetResource @updateAdapter | Should Be $true
@@ -426,6 +477,7 @@ try
                 Mock Get-VMNetworkAdapter
 
                 It 'should return true' {
+                    # TODO: исправить!!!
                     $updateAdapter = $newVMAdapter.Clone()
                     $updateAdapter.Ensure = 'Absent'
                     Test-TargetResource @updateAdapter | Should Be $true
