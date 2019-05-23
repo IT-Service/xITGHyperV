@@ -4,7 +4,7 @@
     # CompatiblePSEditions = @()
 
     # Version number of this module.
-    ModuleVersion      = '1.1.1.80'
+    ModuleVersion      = '1.2.0.101'
 
     # ID used to uniquely identify this module
     GUID               = '274a6c3f-5633-4487-aed1-e4130db26a51'
@@ -83,8 +83,9 @@
 
             # ReleaseNotes of this module
             ReleaseNotes               = @'
-## Bug fixes
-- Fix readme.md (xVMComPort Number property type)
+## New features
+
+- xVMNonLegacyNetworkAdapter
 
 '@
 

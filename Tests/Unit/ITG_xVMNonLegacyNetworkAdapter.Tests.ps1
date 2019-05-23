@@ -1,6 +1,6 @@
 #region HEADER
 $script:dscModuleName = 'xITGHyperV'
-$script:dscResourceName = 'ITG_xVMLegacyNetworkAdapter'
+$script:dscResourceName = 'ITG_xVMNonLegacyNetworkAdapter'
 
 # Unit Test Template Version: 1.2.4
 $script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
@@ -66,7 +66,7 @@ try
                 }
                 It 'should call the expected mocks' {
                     Assert-MockCalled Get-VMNetworkAdapter -Exactly 1
-                    # Assert-MockCalled Get-VMNetworkAdapter -Exactly 1 -parameterFilter { $IsLegacy }
+                    # Assert-MockCalled Get-VMNetworkAdapter -Exactly 1 -parameterFilter { -not $IsLegacy }
                 }
             }
             Context 'Legacy Network Adapter exists' {
@@ -77,7 +77,7 @@ try
                         VMName                   = 'ManagementOS'
                         MacAddress               = '14FEB5C6CE98'
                         DynamicMacAddressEnabled = $False
-                        IsLegacy                 = $True
+                        IsLegacy                 = $False
                     }
                 }
 
@@ -95,7 +95,7 @@ try
                 }
                 It 'should call the expected mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    # Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    # Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                 }
             }
             Context 'Legacy VM Network Adapter does not exist' {
@@ -111,7 +111,7 @@ try
                 }
                 It 'should call the expected mocks' {
                     Assert-MockCalled Get-VMNetworkAdapter -Exactly 1
-                    # Assert-MockCalled Get-VMNetworkAdapter -Exactly 1 -parameterFilter { $IsLegacy }
+                    # Assert-MockCalled Get-VMNetworkAdapter -Exactly 1 -parameterFilter { -not $IsLegacy }
                 }
             }
             Context 'Legacy VM Network Adapter exists' {
@@ -121,7 +121,7 @@ try
                         SwitchName               = 'HostSwitch'
                         VMName                   = 'VM02'
                         DynamicMacAddressEnabled = $True
-                        IsLegacy                 = $True
+                        IsLegacy                 = $False
                     }
                 }
 
@@ -139,7 +139,7 @@ try
                 }
                 It 'should call the expected mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    # Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    # Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                 }
             }
 
@@ -182,8 +182,8 @@ try
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
                     Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
-                    #Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
+                    #Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                     Assert-MockCalled -commandName Remove-VMNetworkAdapter -Exactly 0
                 }
             }
@@ -205,8 +205,8 @@ try
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
                     Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
-                    #Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
+                    #Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                     Assert-MockCalled -commandName Remove-VMNetworkAdapter -Exactly 0
                 }
             }
@@ -216,7 +216,7 @@ try
                         Name       = 'NIC04'
                         SwitchName = 'Switch04'
                         VMName     = 'ManagementOS'
-                        IsLegacy   = $True
+                        IsLegacy   = $False
                     }
                 }
                 Mock Add-VMNetworkAdapter
@@ -234,7 +234,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                     Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 0
                     Assert-MockCalled -commandName Remove-VMNetworkAdapter -Exactly 1
                 }
@@ -246,7 +246,7 @@ try
                         SwitchName               = 'Switch04'
                         VMName                   = 'VM04'
                         DynamicMacAddressEnabled = $True
-                        IsLegacy                 = $True
+                        IsLegacy                 = $False
                     }
                 }
                 Mock Add-VMNetworkAdapter
@@ -264,7 +264,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                     Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 0
                     Assert-MockCalled -commandName Remove-VMNetworkAdapter -Exactly 1
                 }
@@ -276,7 +276,7 @@ try
                         SwitchName               = 'SwitchDifferent'
                         VMName                   = 'VM04'
                         DynamicMacAddressEnabled = $True
-                        IsLegacy                 = $True
+                        IsLegacy                 = $False
                     }
                 }
                 Mock Add-VMNetworkAdapter
@@ -295,7 +295,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                     Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 0
                     Assert-MockCalled -commandName Remove-VMNetworkAdapter -Exactly 0
                     Assert-MockCalled -commandName Connect-VMNetworkAdapter -Exactly 1
@@ -309,7 +309,7 @@ try
                         VMName                   = 'VM04'
                         DynamicMacAddressEnabled = $False
                         MacAddress               = '99999998'
-                        IsLegacy                 = $True
+                        IsLegacy                 = $False
                     }
                 }
                 Mock Add-VMNetworkAdapter
@@ -330,7 +330,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                     Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 0
                     Assert-MockCalled -commandName Remove-VMNetworkAdapter -Exactly 0
                     Assert-MockCalled -commandName Set-VMNetworkAdapter -Exactly 1
@@ -344,7 +344,7 @@ try
                         SwitchName               = 'SwitchDifferent'
                         VMName                   = 'VM04'
                         DynamicMacAddressEnabled = $True
-                        IsLegacy                 = $True
+                        IsLegacy                 = $False
                     }
                 }
                 Mock Add-VMNetworkAdapter
@@ -365,7 +365,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                     Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 0
                     Assert-MockCalled -commandName Remove-VMNetworkAdapter -Exactly 0
                     Assert-MockCalled -commandName Set-VMNetworkAdapter -Exactly 1
@@ -380,7 +380,7 @@ try
                         VMName                   = 'VM04'
                         DynamicMacAddressEnabled = $False
                         MacAddress               = '99999999'
-                        IsLegacy                 = $True
+                        IsLegacy                 = $False
                     }
                 }
                 Mock Add-VMNetworkAdapter
@@ -400,7 +400,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                     Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 0
                     Assert-MockCalled -commandName Remove-VMNetworkAdapter -Exactly 0
                     Assert-MockCalled -commandName Set-VMNetworkAdapter -Exactly 1
@@ -427,7 +427,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                     Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 1
                     Assert-MockCalled -commandName Remove-VMNetworkAdapter -Exactly 0
                     Assert-MockCalled -commandName Set-VMNetworkAdapter -Exactly 0
@@ -466,7 +466,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                 }
             }
             Context 'VM Adapter does not exist but should' {
@@ -483,7 +483,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                 }
             }
             Context 'Adapter exists but should not exist' {
@@ -492,7 +492,7 @@ try
                         Name       = 'NIC10'
                         SwitchName = 'Switch10'
                         VMName     = 'ManagementOS'
-                        IsLegacy   = $True
+                        IsLegacy   = $False
                     }
                 }
 
@@ -507,7 +507,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                 }
             }
             Context 'VM Adapter exists but should not exist' {
@@ -516,7 +516,7 @@ try
                         Name       = 'NIC10'
                         SwitchName = 'Switch10'
                         VMName     = 'VM10'
-                        IsLegacy   = $True
+                        IsLegacy   = $False
                     }
                 }
 
@@ -531,7 +531,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                 }
             }
             Context 'Adapter exists and no action needed' {
@@ -540,7 +540,7 @@ try
                         Name       = 'NIC10'
                         SwitchName = 'Switch10'
                         VMName     = 'ManagementOS'
-                        IsLegacy   = $True
+                        IsLegacy   = $False
                     }
                 }
 
@@ -555,7 +555,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                 }
             }
             Context 'VM Adapter exists and no action needed' {
@@ -565,7 +565,7 @@ try
                         SwitchName               = 'Switch10'
                         VMName                   = 'VM10'
                         DynamicMacAddressEnabled = $True
-                        IsLegacy                 = $True
+                        IsLegacy                 = $False
                     }
                 }
 
@@ -580,7 +580,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                 }
             }
             Context 'VM Adapter exists but with dynamic MAC address' {
@@ -590,7 +590,7 @@ try
                         SwitchName               = 'Switch10'
                         VMName                   = 'VM10'
                         DynamicMacAddressEnabled = $True
-                        IsLegacy                 = $True
+                        IsLegacy                 = $False
                     }
                 }
 
@@ -606,7 +606,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                 }
             }
             Context 'VM Adapter exists but with static MAC address' {
@@ -617,7 +617,7 @@ try
                         VMName                   = 'VM10'
                         DynamicMacAddressEnabled = $False
                         MacAddress               = '14FEB5C6CE98'
-                        IsLegacy                 = $True
+                        IsLegacy                 = $False
                     }
                 }
 
@@ -632,7 +632,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                 }
             }
             Context 'VM Adapter exists but with different MAC address' {
@@ -643,7 +643,7 @@ try
                         VMName                   = 'VM10'
                         DynamicMacAddressEnabled = $false
                         MacAddress               = '14FEB5C6CE99'
-                        IsLegacy                 = $True
+                        IsLegacy                 = $False
                     }
                 }
 
@@ -659,7 +659,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                 }
             }
             Context 'VM Adapter exists but with different switch' {
@@ -670,7 +670,7 @@ try
                         VMName                   = 'VM10'
                         DynamicMacAddressEnabled = $False
                         MacAddress               = '14FEB5C6CE98'
-                        IsLegacy                 = $True
+                        IsLegacy                 = $False
                     }
                 }
 
@@ -686,7 +686,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                 }
             }
             Context 'Adapter does not exist and no action needed' {
@@ -703,7 +703,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                 }
             }
             Context 'VM Adapter does not exist and no action needed' {
@@ -720,7 +720,7 @@ try
                 }
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
-                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                 }
             }
         }
