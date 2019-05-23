@@ -4,7 +4,7 @@
     # CompatiblePSEditions = @()
 
     # Version number of this module.
-    ModuleVersion      = '1.2.0.101'
+    ModuleVersion      = '1.2.1.110'
 
     # ID used to uniquely identify this module
     GUID               = '274a6c3f-5633-4487-aed1-e4130db26a51'
@@ -83,9 +83,10 @@
 
             # ReleaseNotes of this module
             ReleaseNotes               = @'
-## New features
+Fix bugs
 
-- xVMNonLegacyNetworkAdapter
+- Fix xVMLegacyNetworkAdapter and xVMNonLegacyNetworkAdapter work with legacy
+    and non legacy NIC
 
 '@
 
