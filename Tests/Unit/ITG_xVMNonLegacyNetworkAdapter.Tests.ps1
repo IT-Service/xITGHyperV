@@ -142,6 +142,78 @@ try
                     # Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
                 }
             }
+            Context 'Get-VMNetworkAdapter return some non legacy NIC' {
+                Mock -CommandName Get-VMNetworkAdapter -MockWith {
+                    return @(
+                        [PSObject] @{
+                            Name                     = 'NIC1'
+                            SwitchName               = 'Switch'
+                            VMName                   = 'VM02'
+                            DynamicMacAddressEnabled = $True
+                            IsLegacy                 = $False
+                        },
+                        [PSObject] @{
+                            Name                     = 'NIC3'
+                            SwitchName               = 'Switch'
+                            VMName                   = 'VM02'
+                            DynamicMacAddressEnabled = $False
+                            MacAddress               = '99999999'
+                            IsLegacy                 = $False
+                        }
+                    )
+                }
+
+                It 'should return adapter properties' {
+                    $Result = Get-TargetResource `
+                        -Id 'Id4' `
+                        -Name '*' `
+                        -SwitchName 'Switch' `
+                        -VMName 'VM02'
+                    $Result.Ensure                 | Should Be 'Present'
+                    $Result.Name                   | Should Be 'NIC1', 'NIC3'
+                    $Result.SwitchName             | Should Be 'Switch'
+                    $Result.VMName                 | Should Be 'VM02'
+                    $Result.Id                     | Should Be 'Id4'
+                }
+                It 'should call the expected mocks' {
+                    Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
+                    # Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                }
+            }
+            Context 'Get-VMNetworkAdapter return just legacy NIC' {
+                Mock -CommandName Get-VMNetworkAdapter -MockWith {
+                    return @(
+                        [PSObject] @{
+                            Name                     = 'NIC1'
+                            SwitchName               = 'Switch'
+                            VMName                   = 'VM02'
+                            DynamicMacAddressEnabled = $True
+                            IsLegacy                 = $True
+                        },
+                        [PSObject] @{
+                            Name                     = 'NIC3'
+                            SwitchName               = 'Switch'
+                            VMName                   = 'VM02'
+                            DynamicMacAddressEnabled = $False
+                            MacAddress               = '99999999'
+                            IsLegacy                 = $True
+                        }
+                    )
+                }
+
+                It 'should return adapter properties' {
+                    $Result = Get-TargetResource `
+                        -Id 'Id3' `
+                        -Name '*' `
+                        -SwitchName 'Switch' `
+                        -VMName 'VM02'
+                    $Result.Ensure | Should Be 'Absent'
+                }
+                It 'should call the expected mocks' {
+                    Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
+                    # Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                }
+            }
 
         }
 
@@ -428,6 +500,94 @@ try
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
                     #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
+                    Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 1
+                    Assert-MockCalled -commandName Remove-VMNetworkAdapter -Exactly 0
+                    Assert-MockCalled -commandName Set-VMNetworkAdapter -Exactly 0
+                    Assert-MockCalled -commandName Connect-VMNetworkAdapter -Exactly 0
+                }
+            }
+            Context 'Get-VMNetworkAdapter return some non legacy NIC but should not exist' {
+                Mock -CommandName Get-VMNetworkAdapter -MockWith {
+                    return @(
+                        [PSObject] @{
+                            Name                     = 'NIC1'
+                            SwitchName               = 'Switch'
+                            VMName                   = 'VM02'
+                            DynamicMacAddressEnabled = $True
+                            IsLegacy                 = $False
+                        },
+                        [PSObject] @{
+                            Name                     = 'NIC3'
+                            SwitchName               = 'Switch'
+                            VMName                   = 'VM02'
+                            DynamicMacAddressEnabled = $False
+                            MacAddress               = '99999999'
+                            IsLegacy                 = $False
+                        }
+                    )
+                }
+                Mock Add-VMNetworkAdapter
+                Mock Remove-VMNetworkAdapter
+                Mock Set-VMNetworkAdapter
+                Mock Connect-VMNetworkAdapter
+
+                It 'should not throw error' {
+                    {
+                        Set-TargetResource `
+                            -Id 'Id4' `
+                            -Name '*' `
+                            -SwitchName 'Switch' `
+                            -VMName 'VM02' `
+                            -Ensure 'Absent'
+                    } | Should Not Throw
+                }
+                It 'should call expected Mocks' {
+                    Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 0
+                    Assert-MockCalled -commandName Remove-VMNetworkAdapter -Exactly 2
+                    Assert-MockCalled -commandName Set-VMNetworkAdapter -Exactly 0
+                    Assert-MockCalled -commandName Connect-VMNetworkAdapter -Exactly 0
+                }
+            }
+            Context 'Get-VMNetworkAdapter return just legacy NICs but should exist legacy NICs' {
+                Mock -CommandName Get-VMNetworkAdapter -MockWith {
+                    return @(
+                        [PSObject] @{
+                            Name                     = 'NIC1'
+                            SwitchName               = 'Switch'
+                            VMName                   = 'VM02'
+                            DynamicMacAddressEnabled = $True
+                            IsLegacy                 = $True
+                        },
+                        [PSObject] @{
+                            Name                     = 'NIC3'
+                            SwitchName               = 'Switch'
+                            VMName                   = 'VM02'
+                            DynamicMacAddressEnabled = $False
+                            MacAddress               = '99999999'
+                            IsLegacy                 = $True
+                        }
+                    )
+                }
+                Mock Add-VMNetworkAdapter
+                Mock Remove-VMNetworkAdapter
+                Mock Set-VMNetworkAdapter
+                Mock Connect-VMNetworkAdapter
+
+                It 'should not throw error' {
+                    {
+                        Set-TargetResource `
+                            -Id 'Id4' `
+                            -Name 'NIC1' `
+                            -SwitchName 'Switch' `
+                            -VMName 'VM02' `
+                            -Ensure 'Present'
+                    } | Should Not Throw
+                }
+                It 'should call expected Mocks' {
+                    Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
                     Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 1
                     Assert-MockCalled -commandName Remove-VMNetworkAdapter -Exactly 0
                     Assert-MockCalled -commandName Set-VMNetworkAdapter -Exactly 0
@@ -721,6 +881,76 @@ try
                 It 'should call expected Mocks' {
                     Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
                     #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { -not $IsLegacy }
+                }
+            }
+            Context 'Get-VMNetworkAdapter return some non legacy NIC' {
+                Mock -CommandName Get-VMNetworkAdapter -MockWith {
+                    return @(
+                        [PSObject] @{
+                            Name                     = 'NIC1'
+                            SwitchName               = 'Switch'
+                            VMName                   = 'VM02'
+                            DynamicMacAddressEnabled = $True
+                            IsLegacy                 = $False
+                        },
+                        [PSObject] @{
+                            Name                     = 'NIC3'
+                            SwitchName               = 'Switch'
+                            VMName                   = 'VM02'
+                            DynamicMacAddressEnabled = $False
+                            MacAddress               = '99999999'
+                            IsLegacy                 = $False
+                        }
+                    )
+                }
+
+                It 'should return true' {
+                    Test-TargetResource `
+                        -Id 'Id4' `
+                        -Name '*' `
+                        -SwitchName 'Switch' `
+                        -VMName 'VM02' `
+                        -Ensure 'Present' `
+                        | Should be $true
+                }
+                It 'should call expected Mocks' {
+                    Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                }
+            }
+            Context 'Get-VMNetworkAdapter return just legacy NIC' {
+                Mock -CommandName Get-VMNetworkAdapter -MockWith {
+                    return @(
+                        [PSObject] @{
+                            Name                     = 'NIC1'
+                            SwitchName               = 'Switch'
+                            VMName                   = 'VM02'
+                            DynamicMacAddressEnabled = $True
+                            IsLegacy                 = $True
+                        },
+                        [PSObject] @{
+                            Name                     = 'NIC3'
+                            SwitchName               = 'Switch'
+                            VMName                   = 'VM02'
+                            DynamicMacAddressEnabled = $False
+                            MacAddress               = '99999999'
+                            IsLegacy                 = $True
+                        }
+                    )
+                }
+
+                It 'should return false' {
+                    Test-TargetResource `
+                        -Id 'Id4' `
+                        -Name '*' `
+                        -SwitchName 'Switch' `
+                        -VMName 'VM02' `
+                        -Ensure 'Present' `
+                        | Should be $false
+                }
+                It 'should call expected Mocks' {
+                    Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
                 }
             }
         }
