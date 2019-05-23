@@ -37,6 +37,8 @@ A full list of changes in each version can be found in the [change log](CHANGELO
 
 * [**xVMLegacyNetworkAdapter**](#xvmlegacynetworkadapter) manages legacy
  VM network adapters attached to a Hyper-V virtual machine.
+* [**xVMNonLegacyNetworkAdapter**](#xvmnonlegacynetworkadapter) manages non legacy
+ VM network adapters attached to a Hyper-V virtual machine.
 * [**xVMComPort**](#xvmcomport) manages
  VM serial ports attached to a Hyper-V virtual machine.
 
@@ -69,6 +71,36 @@ Manages legacy VM Network adapters attached to a Hyper-V virtual machine.
  Dynamic MAC Address.
 
 * [Add multiple VM Network adapters to a VM](https://github.com/IT-Service/xITGHyperV/blob/feature/xITGHyperV/Examples/Resources/xVMLegacyNetworkAdapter/1-Sample_xVMLegacyNetworkAdapter_MultipleVM_Config.ps1)
+
+### xVMNonLegacyNetworkAdapter
+
+Manages non legacy VM Network adapters attached to a Hyper-V virtual machine.
+
+#### Requirements for xVMNonLegacyNetworkAdapter
+
+* The Hyper-V Role has to be installed on the machine.
+* The Hyper-V PowerShell module has to be installed on the machine.
+
+#### Parameters for xVMNonLegacyNetworkAdapter
+
+* **`[String]` Id** _(Key)_: Unique string for identifying the resource instance.
+* **`[String]` Name** _(Required)_: Name of the network adapter as it appears either
+ in the management OS or attached to a VM.
+* **`[String]` SwitchName** _(Required)_: Virtual Switch name to connect to.
+* **`[String]` VMName** _(Required)_: Name of the VM to attach to.
+ If you want to attach new VM Network adapter to the management OS,
+ set this property to 'Management OS'.
+* **`[String]` MacAddress** _(Write)_: Use this to specify a Static MAC Address.
+ If this parameter is not specified, dynamic MAC Address will be set.
+* **`[String]` Ensure** _(Write)_: Ensures that the VM Network Adapter is
+ Present or Absent. The default value is Present. { *Present* | Absent }.
+
+#### Read-Only Properties from Get-TargetResource for xVMNonLegacyNetworkAdapter
+
+* **`[Boolean]` DynamicMacAddress** _(Read)_: Does the VM Network Adapter use a
+ Dynamic MAC Address.
+
+* [Add multiple VM Network adapters to a VM](https://github.com/IT-Service/xITGHyperV/blob/feature/xITGHyperV/Examples/Resources/xVMNonLegacyNetworkAdapter/1-Sample_xVMNonLegacyNetworkAdapter_MultipleVM_Config.ps1)
 
 ### xVMComPort
 
