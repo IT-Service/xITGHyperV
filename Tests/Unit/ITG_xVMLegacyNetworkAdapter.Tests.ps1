@@ -407,6 +407,33 @@ try
                     Assert-MockCalled -commandName Connect-VMNetworkAdapter -Exactly 0
                 }
             }
+            Context 'VM Adapter does not exists but should with static MAC address' {
+                Mock Get-VMNetworkAdapter
+                Mock Add-VMNetworkAdapter
+                Mock Remove-VMNetworkAdapter
+                Mock Set-VMNetworkAdapter
+                Mock Connect-VMNetworkAdapter
+
+                It 'should not throw error' {
+                    {
+                        Set-TargetResource `
+                            -Id 'Id04' `
+                            -Name 'NIC04' `
+                            -SwitchName 'Switch04' `
+                            -MacAddress '99999999' `
+                            -VMName 'VM04' `
+                            -Ensure 'Present'
+                    } | Should Not Throw
+                }
+                It 'should call expected Mocks' {
+                    Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1
+                    #Assert-MockCalled -commandName Get-VMNetworkAdapter -Exactly 1 -ParameterFilter { $IsLegacy }
+                    Assert-MockCalled -commandName Add-VMNetworkAdapter -Exactly 1
+                    Assert-MockCalled -commandName Remove-VMNetworkAdapter -Exactly 0
+                    Assert-MockCalled -commandName Set-VMNetworkAdapter -Exactly 0
+                    Assert-MockCalled -commandName Connect-VMNetworkAdapter -Exactly 0
+                }
+            }
         }
 
         Describe "$($Global:DSCResourceName)\Test-TargetResource" {
