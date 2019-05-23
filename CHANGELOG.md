@@ -1,5 +1,12 @@
 # Change log for xITGHyperV
 
+## 1.2.1
+
+Fix bugs
+
+- Fix xVMLegacyNetworkAdapter and xVMNonLegacyNetworkAdapter work with legacy
+ and non legacy NIC
+
 ## 1.2
 
 New features
