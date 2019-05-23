@@ -1,5 +1,11 @@
 # Change log for xITGHyperV
 
+## 1.2
+
+New features
+
+- xVMNonLegacyNetworkAdapter DSC Resource
+
 ## 1.1.3
 
 - Fix publishing release notes to github.com on AppVeyor master build
