@@ -1,5 +1,5 @@
-[ClassVersion("1.2.1.100"), FriendlyName("xVMLegacyNetworkAdapter")]
-class ITG_xVMLegacyNetworkAdapter : OMI_BaseResource
+[ClassVersion("1.2.1.100"), FriendlyName("xVMNonLegacyNetworkAdapter")]
+class ITG_xVMNonLegacyNetworkAdapter : OMI_BaseResource
 {
     [Key] String Id;
     [Required] String Name;

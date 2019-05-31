@@ -4,11 +4,11 @@ $script:modulesFolderPath = Join-Path -Path $script:resourceModulePath -ChildPat
 $script:resourceHelperModulePath = Join-Path -Path $script:modulesFolderPath -ChildPath 'DscResource.Common'
 Import-Module -Name (Join-Path -Path $script:resourceHelperModulePath -ChildPath 'DscResource.Common.psm1')
 
-$script:localizedData = Get-LocalizedData -ResourceName 'ITG_xVMLegacyNetworkAdapter'
+$script:localizedData = Get-LocalizedData -ResourceName 'ITG_xVMNonLegacyNetworkAdapter'
 
 <#
 .SYNOPSIS
-    Gets ITG_xVMLegacyNetworkAdapter resource current state.
+    Gets ITG_xVMNonLegacyNetworkAdapter resource current state.
 
 .PARAMETER Id
     Specifies an unique identifier for the network adapter.
@@ -63,7 +63,7 @@ Function Get-TargetResource
     }
 
     Write-Verbose -Message $localizedData.GetVMNetAdapter
-    $netAdapters = @( Get-VMNetworkAdapter @arguments -ErrorAction SilentlyContinue | Where-Object { $_.IsLegacy } )
+    $netAdapters = @( Get-VMNetworkAdapter @arguments -ErrorAction SilentlyContinue | Where-Object { -not $_.IsLegacy } )
 
     if ( $netAdapters.Count -gt 0 )
     {
@@ -99,7 +99,7 @@ Function Get-TargetResource
 
 <#
 .SYNOPSIS
-    Sets ITG_xVMLegacyNetworkAdapter resource state.
+    Sets ITG_xVMNonLegacyNetworkAdapter resource state.
 
 .PARAMETER Id
     Specifies an unique identifier for the network adapter.
@@ -160,7 +160,7 @@ Function Set-TargetResource
     }
 
     Write-Verbose -Message $localizedData.GetVMNetAdapter
-    $netAdapters = @( Get-VMNetworkAdapter @arguments -ErrorAction SilentlyContinue | Where-Object { $_.IsLegacy } )
+    $netAdapters = @( Get-VMNetworkAdapter @arguments -ErrorAction SilentlyContinue | Where-Object { -not $_.IsLegacy } )
 
     if ( $Ensure -eq 'Present' )
     {
@@ -230,7 +230,7 @@ Function Set-TargetResource
                 }
                 $arguments.Add( 'SwitchName', $SwitchName )
             }
-            Add-VMNetworkAdapter @arguments -IsLegacy $true -ErrorAction Stop -Verbose
+            Add-VMNetworkAdapter @arguments -IsLegacy $false -ErrorAction Stop -Verbose
         }
     }
     else
@@ -241,7 +241,7 @@ Function Set-TargetResource
 
 <#
 .SYNOPSIS
-    Tests if ITG_xVMLegacyNetworkAdapter resource state is indeed desired state or not.
+    Tests if ITG_xVMNonLegacyNetworkAdapter resource state is indeed desired state or not.
 
 .PARAMETER Id
     Specifies an unique identifier for the network adapter.
@@ -303,7 +303,7 @@ Function Test-TargetResource
     }
 
     Write-Verbose -Message $localizedData.GetVMNetAdapter
-    $netAdapters = @( Get-VMNetworkAdapter @arguments -ErrorAction SilentlyContinue | Where-Object { $_.IsLegacy } )
+    $netAdapters = @( Get-VMNetworkAdapter @arguments -ErrorAction SilentlyContinue | Where-Object { -not $_.IsLegacy } )
 
     if ( $Ensure -eq 'Present' )
     {

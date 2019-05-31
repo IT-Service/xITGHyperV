@@ -2,16 +2,17 @@
 #      environment configuration  #
 #---------------------------------#
 
-version: 1.0.7.{build}
+version: 1.2.6.{build}
 environment:
   gallery_api:
     secure: lbDrWTaiRIaEUnUacZbYJHSaCGvAZfz8HsfoaE5uc5NuoebPCvptrlXzRTHN10v9
 
 install:
-    - git clone https://github.com/PowerShell/DscResource.Tests
-    - ps: Write-Verbose -Message "PowerShell version $($PSVersionTable.PSVersion)" -Verbose
-    - ps: Import-Module -Name "$env:APPVEYOR_BUILD_FOLDER\DscResource.Tests\AppVeyor.psm1"
-    - ps: Invoke-AppveyorInstallTask
+  - git clone https://github.com/PowerShell/DscResource.Tests
+  - ps: Write-Verbose -Message "PowerShell version $($PSVersionTable.PSVersion)" -Verbose
+  - ps: Import-Module -Name "$env:APPVEYOR_BUILD_FOLDER\DscResource.Tests\AppVeyor.psm1"
+  - ps: Invoke-AppveyorInstallTask
+  - ps: Install-Module -Name 'xHyper-V' -MinimumVersion '3.16.0.0' -Verbose
 
 #---------------------------------#
 #      build configuration        #
@@ -38,6 +39,24 @@ after_test:
 #      deployment configuration   #
 #---------------------------------#
 
+before_deploy:
+  - ps: >-
+      ${env:ReleaseNotes} = ( Import-Module $env:APPVEYOR_BUILD_FOLDER -Force -PassThru ).ReleaseNotes;
+deploy:
+  - provider: GitHub
+    tag: $(APPVEYOR_REPO_TAG_NAME)
+    release: $(APPVEYOR_REPO_TAG_NAME)
+    description: $(ReleaseNotes)
+    auth_token:
+      secure: H6HQrXUd6e0XBLfgdcrQ7T78c3+NTlMF92eBHy79j9W1n20zW8uJDNKzk0v82VM9
+    artifact:
+    draft: false
+    prerelease: false
+    force_update: false
+    on:
+      branch: master
+      APPVEYOR_REPO_TAG: true
+
 deploy_script:
   - ps: |
         $ErrorActionPreference = 'Continue'
@@ -50,7 +69,7 @@ deploy_script:
           #$currentVersion = (Import-PowerShellDataFile .\ReportingServicesTools\$moduleName.psd1).ModuleVersion
           #((Get-Content .\ReportingServicesTools\ReportingServicesTools.psd1).replace("ModuleVersion = '$($currentVersion)'", "ModuleVersion = '$($env:APPVEYOR_REPO_TAG_NAME)'")) | Set-Content .\ReportingServicesTools\$moduleName.psd1
           git clean -ffdx
-          Remove-Item -Path '.*','Examples','Tests' -Recurse -Force
+          Remove-Item -Path '.*','Examples','Tests','*.json' -Recurse -Force
           Publish-Module -Path . -NuGetApiKey $env:gallery_api
           #git config --global core.safecrlf false
           #git config --global credential.helper store
