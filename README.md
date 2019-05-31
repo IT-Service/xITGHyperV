@@ -12,6 +12,8 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/q0dap46majxqxc3q/branch/master?svg=true)](https://ci.appveyor.com/project/IT-Service/xITGHyperV/branch/master)
 [![codecov](https://codecov.io/gh/IT-Service/xITGHyperV/branch/master/graph/badge.svg)](https://codecov.io/gh/IT-Service/xITGHyperV/branch/master)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/xITGHyperV.svg)](https://www.powershellgallery.com/packages/xITGHyperV/)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/xITGHyperV.svg)](https://www.powershellgallery.com/packages/xITGHyperV/)
 
 This is the branch containing the latest release - no contributions should be
 made directly to this branch.
