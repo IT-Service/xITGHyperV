@@ -2,16 +2,17 @@
 #      environment configuration  #
 #---------------------------------#
 
-version: 1.2.3.{build}
+version: 1.2.4.{build}
 environment:
   gallery_api:
     secure: lbDrWTaiRIaEUnUacZbYJHSaCGvAZfz8HsfoaE5uc5NuoebPCvptrlXzRTHN10v9
 
 install:
-    - git clone https://github.com/PowerShell/DscResource.Tests
-    - ps: Write-Verbose -Message "PowerShell version $($PSVersionTable.PSVersion)" -Verbose
-    - ps: Import-Module -Name "$env:APPVEYOR_BUILD_FOLDER\DscResource.Tests\AppVeyor.psm1"
-    - ps: Invoke-AppveyorInstallTask
+  - git clone https://github.com/PowerShell/DscResource.Tests
+  - ps: Write-Verbose -Message "PowerShell version $($PSVersionTable.PSVersion)" -Verbose
+  - ps: Import-Module -Name "$env:APPVEYOR_BUILD_FOLDER\DscResource.Tests\AppVeyor.psm1"
+  - ps: Invoke-AppveyorInstallTask
+  - ps: Install-Module -Name 'xHyper-V' -MinimumVersion '3.16.0.0' -Verbose
 
 #---------------------------------#
 #      build configuration        #

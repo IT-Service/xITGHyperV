@@ -1,5 +1,11 @@
 # Change log for xITGHyperV
 
+## 1.2.4
+
+Fix bugs
+
+- Fix ExternalModuleDependencies warning when module installed or updated
+
 ## 1.2.1
 
 Fix bugs
