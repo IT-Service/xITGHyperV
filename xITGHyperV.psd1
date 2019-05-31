@@ -1,10 +1,10 @@
-@{
+﻿@{
     # RootModule = ''
 
     # CompatiblePSEditions = @()
 
     # Version number of this module.
-    ModuleVersion      = '1.2.4.120'
+    ModuleVersion      = '1.2.5.120'
 
     # ID used to uniquely identify this module
     GUID               = '274a6c3f-5633-4487-aed1-e4130db26a51'
@@ -13,7 +13,7 @@
     Author             = 'Sergei S. Betke'
 
     # Company or vendor of this module
-    CompanyName        = 'Test-St-Petersburg'
+    CompanyName        = 'ФБУ "Тест-С.-Петербург"'
 
     # Copyright statement for this module
     Copyright          = '(c) 2019 Sergey S. Betke. All rights reserved.'
