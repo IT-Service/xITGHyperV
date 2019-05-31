@@ -4,7 +4,7 @@
     # CompatiblePSEditions = @()
 
     # Version number of this module.
-    ModuleVersion      = '1.2.3.110'
+    ModuleVersion      = '1.2.4.120'
 
     # ID used to uniquely identify this module
     GUID               = '274a6c3f-5633-4487-aed1-e4130db26a51'
@@ -50,9 +50,9 @@
 
     RequiredAssemblies = @()
 
-    #RequiredModules    = @(
-    #    @{ ModuleName = 'xHyper-V'; ModuleVersion = '3.16.0.0' }
-    #)
+    RequiredModules    = @(
+        @{ ModuleName = 'xHyper-V'; ModuleVersion = '3.16.0.0' }
+    )
 
     VariablesToExport  = @()
 
@@ -85,8 +85,7 @@
             ReleaseNotes               = @'
 Fix bugs
 
-- Fix xVMLegacyNetworkAdapter and xVMNonLegacyNetworkAdapter work with legacy
-    and non legacy NIC
+- Fix ExternalModuleDependencies
 
 '@
 
@@ -97,7 +96,7 @@ Fix bugs
 
             # External dependent modules of this module
             ExternalModuleDependencies = @(
-                @{ ModuleName = 'xHyper-V'; ModuleVersion = '3.16.0.0' }
+                'xHyper-V'
             )
 
         } # End of PSData hash table
