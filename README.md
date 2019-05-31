@@ -72,7 +72,7 @@ Manages legacy VM Network adapters attached to a Hyper-V virtual machine.
 
 #### Examples
 
-* [Add multiple VM Network adapters to a VM](https://github.com/IT-Service/xITGHyperV/blob/feature/xITGHyperV/Examples/Resources/xVMLegacyNetworkAdapter/1-Sample_xVMLegacyNetworkAdapter_MultipleVM_Config.ps1)
+* [Add multiple VM Network adapters to a VM](/Examples/Resources/xVMLegacyNetworkAdapter/1-Sample_xVMLegacyNetworkAdapter_MultipleVM_Config.ps1)
 
 ### xVMNonLegacyNetworkAdapter
 
@@ -104,7 +104,7 @@ Manages non legacy VM Network adapters attached to a Hyper-V virtual machine.
 
 #### Examples
 
-* [Add multiple VM Network adapters to a VM](https://github.com/IT-Service/xITGHyperV/blob/feature/xITGHyperV/Examples/Resources/xVMNonLegacyNetworkAdapter/1-Sample_xVMNonLegacyNetworkAdapter_MultipleVM_Config.ps1)
+* [Add multiple VM Network adapters to a VM](/Examples/Resources/xVMNonLegacyNetworkAdapter/1-Sample_xVMNonLegacyNetworkAdapter_MultipleVM_Config.ps1)
 
 ### xVMComPort
 
@@ -128,4 +128,4 @@ Manages VM serial ports attached to a Hyper-V virtual machine.
 
 #### Examples
 
-* [Attach VM serial port to a named pipe](https://github.com/IT-Service/xITGHyperV/blob/feature/xITGHyperV/Examples/Resources/xVMComPort/1-Sample_xVMComPort_Config.ps1)
+* [Attach VM serial port to a named pipe](/Examples/Resources/xVMComPort/1-Sample_xVMComPort_Config.ps1)
