@@ -2,7 +2,7 @@
 #      environment configuration  #
 #---------------------------------#
 
-version: 1.2.5.{build}
+version: 1.2.6.{build}
 environment:
   gallery_api:
     secure: lbDrWTaiRIaEUnUacZbYJHSaCGvAZfz8HsfoaE5uc5NuoebPCvptrlXzRTHN10v9

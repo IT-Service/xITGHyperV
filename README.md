@@ -19,7 +19,7 @@ made directly to this branch.
 ### develop
 
 [![Build status](https://ci.appveyor.com/api/projects/status/q0dap46majxqxc3q/branch/develop?svg=true)](https://ci.appveyor.com/project/IT-Service/xITGHyperV/branch/develop)
-[![codecov](https://codecov.io/gh/PowerShell/xHyper-V/branch/develop/graph/badge.svg)](https://codecov.io/gh/IT-Service/xITGHyperV/branch/develop)
+[![codecov](https://codecov.io/gh/IT-Service/xITGHyperV/branch/develop/graph/badge.svg)](https://codecov.io/gh/IT-Service/xITGHyperV/branch/develop)
 
 This is the development branch to which contributions should be proposed by
 contributors as pull requests. This development branch will periodically be
