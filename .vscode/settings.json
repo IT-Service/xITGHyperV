@@ -14,6 +14,9 @@
     "powershell.codeFormatting.whitespaceAfterSeparator": true,
     "powershell.codeFormatting.ignoreOneLineBlock": false,
     "powershell.codeFormatting.preset": "Custom",
+    "[powershell]": {
+        "files.encoding": "utf8bom"
+    },
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
     "powershell.scriptAnalysis.settingsPath": ".vscode\\analyzersettings.psd1"

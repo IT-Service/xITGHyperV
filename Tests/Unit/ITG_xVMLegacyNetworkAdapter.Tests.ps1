@@ -1,4 +1,4 @@
-#region HEADER
+﻿#region HEADER
 $script:dscModuleName = 'xITGHyperV'
 $script:dscResourceName = 'ITG_xVMLegacyNetworkAdapter'
 
