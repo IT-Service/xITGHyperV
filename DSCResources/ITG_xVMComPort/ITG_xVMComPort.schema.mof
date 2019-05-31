@@ -1,4 +1,4 @@
-﻿[ClassVersion("1.1.1.80"), FriendlyName("xVMComPort")]
+[ClassVersion("1.1.1.80"), FriendlyName("xVMComPort")]
 class ITG_xVMComPort : OMI_BaseResource
 {
     [Key] String Id;
