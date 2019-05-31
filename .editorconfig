@@ -27,7 +27,14 @@ end_of_line = lf
 [*.{ps1,psm1,psd1}]
 indent_style = space
 indent_size = 4
+
+[*.{ps1,psm1}]
+indent_style = space
+indent_size = 4
 charset = utf-8
+
+[*.psd1]
+charset = utf-8-bom
 
 [*.json]
 indent_style = space
